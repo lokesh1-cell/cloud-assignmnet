@@ -40,3 +40,11 @@ def test_broken_json():
 def test_extract_json_from_noise():
     assert mr.extract_json('garbage {"intent":"x"} trailing') == '{"intent":"x"}'
     assert mr.extract_json('nested {"a":{"b":1}} end') == '{"a":{"b":1}}'
+
+
+@pytest.mark.parametrize("intent", [[], {}, None, 7])
+def test_non_string_intent_is_invalid(intent):
+    import json
+
+    raw = json.dumps({"intent": intent, "date": None, "time": None, "place": None})
+    assert mr.validate(raw) is None

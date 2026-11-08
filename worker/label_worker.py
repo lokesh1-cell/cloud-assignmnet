@@ -66,7 +66,7 @@ def call_teacher(prompt_template, command):
     )
     with urllib.request.urlopen(req, timeout=300) as resp:
         body = json.loads(resp.read().decode("utf-8"))
-    return body.get("response", "").strip()
+    return body.get("response", "")
 
 
 def read_command_pool():
@@ -103,9 +103,12 @@ def main():
     storage.ensure_bucket(DATASETS_BUCKET)
     local_path = os.path.join("datasets", "teacher", f"shard-{idx}.jsonl")
     os.makedirs(os.path.dirname(local_path), exist_ok=True)
+    key = f"teacher/shard-{idx}.jsonl"
+    if not os.path.exists(local_path) and key in storage.list_keys(DATASETS_BUCKET, key):
+        with open(local_path, "w", encoding="utf-8") as checkpoint:
+            checkpoint.write(storage.read_text(DATASETS_BUCKET, key))
     done = already_done(local_path)
 
-    key = f"teacher/shard-{idx}.jsonl"
     print(f"[shard {idx}/{count}] {len(mine)} commands, {len(done)} already done", flush=True)
 
     with open(local_path, "a", encoding="utf-8") as out:

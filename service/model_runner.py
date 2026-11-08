@@ -41,7 +41,7 @@ def validate(raw):
         return None
     if not isinstance(obj, dict) or set(obj.keys()) != KEYS:
         return None
-    if obj.get("intent") not in INTENTS:
+    if not isinstance(obj.get("intent"), str) or obj["intent"] not in INTENTS:
         return None
     for k in ("date", "time", "place"):
         if obj[k] is not None and not isinstance(obj[k], str):
@@ -83,15 +83,25 @@ def _download_model(model_uri):
         config=Config(signature_version="s3v4", s3={"addressing_style": "path"}),
     )
     dest = tempfile.mkdtemp(prefix="model-")
-    resp = s3.list_objects_v2(Bucket=bucket, Prefix=prefix)
-    objs = resp.get("Contents", [])
+    print(f"downloading model from {model_uri}", flush=True)
+    objs = [
+        obj
+        for page in s3.get_paginator("list_objects_v2").paginate(Bucket=bucket, Prefix=prefix)
+        for obj in page.get("Contents", [])
+    ]
     if not objs:
         raise RuntimeError(f"no objects under {model_uri}")
     for o in objs:
         name = o["Key"][len(prefix) :]
         if not name:
             continue
-        s3.download_file(bucket, o["Key"], os.path.join(dest, name))
+        target = os.path.abspath(os.path.join(dest, name))
+        if os.path.commonpath([dest, target]) != dest:
+            raise RuntimeError(f"invalid model object path: {name}")
+        os.makedirs(os.path.dirname(target), exist_ok=True)
+        s3.download_file(bucket, o["Key"], target)
+        print(f"downloaded {model_uri}/{name}", flush=True)
+    print(f"model download complete: {len(objs)} objects", flush=True)
     return dest
 
 
@@ -103,8 +113,10 @@ class Runner:
         self.max_new_tokens = int(os.environ.get("MAX_NEW_TOKENS", "64"))
 
     def load(self):
+        import torch
         from transformers import AutoModelForCausalLM, AutoTokenizer
 
+        torch.set_num_threads(int(os.environ.get("TORCH_NUM_THREADS", "1")))
         local_dir = _resolve_model_dir(os.environ["MODEL_URI"])
         self.tokenizer = AutoTokenizer.from_pretrained(local_dir)
         if self.tokenizer.pad_token is None:

@@ -54,7 +54,7 @@ def classify(rec):
         return "a"
     if set(obj.keys()) != KEYS:
         return "b"
-    if obj.get("intent") not in INTENTS:
+    if not isinstance(obj.get("intent"), str) or obj["intent"] not in INTENTS:
         return "c"
     text = norm(rec.get("text", ""))
     for k in ("date", "time", "place"):

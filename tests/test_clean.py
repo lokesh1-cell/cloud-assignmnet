@@ -95,3 +95,9 @@ def test_slot_must_be_substring_of_command():
         )
         == "d"
     )
+
+
+def test_non_string_intent_is_rejected_without_crashing():
+    for intent in ([], {}, None, 7):
+        row = rec("X", "weather", {"intent": intent, "date": None, "time": None, "place": None})
+        assert clean.classify(row) == "c"

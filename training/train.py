@@ -18,7 +18,9 @@ import argparse
 import csv
 import hashlib
 import json
+import importlib.metadata
 import os
+import platform
 import random
 import sys
 import tarfile
@@ -82,6 +84,7 @@ def main():
     from torch.utils.data import DataLoader, Dataset
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
+    torch.set_num_threads(int(os.environ.get("OMP_NUM_THREADS", "2")))
     cfg = load_config()
     seed = a.seed if a.seed is not None else cfg["seed"]
     epochs = a.epochs if a.epochs is not None else cfg["epochs"]
@@ -146,6 +149,34 @@ def main():
     os.makedirs(out_dir, exist_ok=True)
     model.save_pretrained(out_dir)
     tokenizer.save_pretrained(out_dir)
+    metadata = {
+        "version": a.version,
+        "base_model": cfg["model_name"],
+        "teacher_model": "phi3.5",
+        "seed": seed,
+        "epochs": epochs,
+        "training_examples": len(rows),
+        "config": cfg,
+        "python": platform.python_version(),
+        "libraries": {
+            name: importlib.metadata.version(name)
+            for name in ("torch", "transformers", "tokenizers", "boto3", "pyyaml")
+        },
+    }
+    dataset_checksum = os.path.join(ROOT, "datasets", "v1", "train.sha256")
+    if os.path.isfile(dataset_checksum):
+        with open(dataset_checksum, encoding="utf-8") as checksum_file:
+            metadata["training_data_sha256"] = checksum_file.read().split()[0]
+    with open(os.path.join(out_dir, "version_info.json"), "w", encoding="utf-8") as f:
+        json.dump(metadata, f, indent=2)
+    manifest = []
+    for name in sorted(os.listdir(out_dir)):
+        if name in ("model.sha256", "files.sha256"):
+            continue
+        with open(os.path.join(out_dir, name), "rb") as f:
+            manifest.append(f"{hashlib.sha256(f.read()).hexdigest()}  {name}\n")
+    with open(os.path.join(out_dir, "files.sha256"), "w", encoding="utf-8") as f:
+        f.writelines(manifest)
     print(f"[train] saved model + tokenizer to {out_dir}")
 
     # Archive for the GitHub Release asset + checksum.

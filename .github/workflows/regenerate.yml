@@ -1,0 +1,133 @@
+name: Regenerate teacher data and student models
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Install storage dependencies
+        run: python -m pip install -r worker/requirements.txt
+      - name: Create cluster and object storage
+        run: bash scripts/ci/prepare_cluster.sh
+      - name: Start fixed CPU teacher
+        run: |
+          docker run -d --name teacher --network k3d-cloud-mini --cpus 3 --memory 8g \
+            -p 127.0.0.1:11434:11434 -e OLLAMA_NUM_PARALLEL=2 \
+            -e OLLAMA_CONTEXT_LENGTH=2048 -e OLLAMA_KEEP_ALIVE=-1 \
+            ollama/ollama:0.40.15
+          for attempt in $(seq 1 60); do
+            if curl -sf http://localhost:11434/api/tags >/dev/null; then break; fi
+            sleep 2
+          done
+          docker exec teacher ollama pull phi3.5
+          docker exec teacher ollama show phi3.5 > results/fresh/teacher_model.txt
+          docker inspect teacher --format '{{.Image}}' > results/fresh/teacher_image.txt
+      - name: Label all 3000 commands in parallel pipeline pods
+        run: |
+          docker build -f worker/Dockerfile -t cloud-mini/worker:v1 .
+          k3d image import cloud-mini/worker:v1 -c cloud-mini
+          sed 's|http://host.k3d.internal:11434|http://teacher:11434|' k8s/worker-job.yaml | kubectl apply -f -
+          kubectl -n pipeline get job,pods -o wide > results/fresh/pipeline_start.txt
+          for attempt in $(seq 1 390); do
+            kubectl -n pipeline get pods -o wide
+            kubectl -n pipeline logs -l job=teacher-label --tail=3 --prefix=true || true
+            complete=$(kubectl -n pipeline get job teacher-label -o jsonpath='{.status.succeeded}')
+            failed=$(kubectl -n pipeline get job teacher-label -o jsonpath='{.status.conditions[?(@.type=="Failed")].status}')
+            if [ "$failed" = True ]; then exit 1; fi
+            if [ "${complete:-0}" = 2 ]; then break; fi
+            sleep 45
+          done
+          kubectl -n pipeline wait --for=condition=complete job/teacher-label --timeout=30s
+          kubectl -n pipeline get job,pods -o yaml > results/fresh/pipeline_complete.yaml
+          kubectl -n pipeline logs -l job=teacher-label --tail=-1 --prefix=true > results/fresh/pipeline_logs.txt
+      - name: Clean and verify actual teacher data
+        run: |
+          set -a; source .env; set +a
+          export S3_ENDPOINT=http://localhost:8333
+          python worker/clean.py --counts-out results/fresh/clean_counts.json | tee results/fresh/cleaning.txt
+          python scripts/ci/export_data.py
+          python scripts/eval_teacher.py --input data/validation.jsonl --out results/fresh/pred_teacher.jsonl
+          python tools/score.py results/fresh/pred_teacher.jsonl data/validation.jsonl --out results/fresh/teacher_validation.json
+      - name: Export checkpoints even after a failure
+        if: always()
+        run: |
+          if [ -f .env ]; then
+            set -a; source .env; set +a
+            export S3_ENDPOINT=http://localhost:8333
+            python scripts/ci/snapshot_storage.py || true
+          fi
+      - name: Preserve datasets and execution evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: teacher-data-${{ github.run_id }}
+          path: |
+            datasets/
+            results/fresh/
+          retention-days: 30
+      - name: Remove cluster
+        if: always()
+        run: k3d cluster delete cloud-mini || true
+  train:
+    needs: label
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: teacher-data-${{ github.run_id }}
+      - name: Install CPU training tools
+        run: |
+          python -m pip install torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r training/requirements.txt
+      - name: Smoke train then train both versions
+        env:
+          OMP_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+        run: |
+          mkdir -p results/fresh
+          python training/train.py --version smoke --subset 50 --no-upload | tee results/fresh/train_smoke.txt
+          python training/train.py --version v1 --no-upload | tee results/fresh/train_v1.txt
+          cp training/loss.csv results/fresh/loss_v1.csv
+          python training/train.py --version v2 --seed 7 --no-upload | tee results/fresh/train_v2.txt
+          cp training/loss.csv results/fresh/loss_v2.csv
+          python -m pip freeze > results/fresh/training_environment.txt
+      - name: Evaluate exact trained models and base
+        env:
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: |
+          for version in v1 v2; do
+            python training/predict.py --model models/$version --input data/validation.jsonl --out results/fresh/pred_student_$version.jsonl
+            python tools/score.py results/fresh/pred_student_$version.jsonl data/validation.jsonl --out results/fresh/score_student_$version.json
+          done
+          python training/predict.py --model EleutherAI/pythia-70m --input data/validation.jsonl --out results/fresh/pred_base.jsonl
+          python tools/score.py results/fresh/pred_base.jsonl data/validation.jsonl --out results/fresh/score_base.json
+      - name: Publish versioned model and dataset assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp models/v1/model.sha256 models/model.sha256
+          cp models/v2/model.sha256 models/model-v2.sha256
+          tar -czf /tmp/teacher-data.tar.gz datasets results/fresh
+          gh release view model-v1 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+            gh release create model-v1 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title 'Versioned command parser models' --notes 'CPU models trained on phi3.5 generated labels. Dataset and execution evidence included; no validation labels used for training.'
+          gh release upload model-v1 --repo "$GITHUB_REPOSITORY" models/v1.tar.gz models/v2.tar.gz models/model.sha256 models/model-v2.sha256 /tmp/teacher-data.tar.gz --clobber
+      - name: Preserve training and evaluation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: trained-evidence-${{ github.run_id }}
+          path: results/fresh/
+          retention-days: 30
