@@ -1,0 +1,79 @@
+[
+  {
+    "utc": "2026-11-08T15:19:30.041233+00:00",
+    "new_pods": 2,
+    "new_ready": 0,
+    "old_pods_present": true,
+    "ready_endpoints": 0
+  },
+  {
+    "utc": "2026-11-08T15:19:31.042278+00:00",
+    "new_pods": 2,
+    "new_ready": 0,
+    "old_pods_present": true,
+    "ready_endpoints": 0
+  },
+  {
+    "utc": "2026-11-08T15:19:31.882640+00:00",
+    "new_pods": 2,
+    "new_ready": 0,
+    "old_pods_present": true,
+    "ready_endpoints": 0
+  },
+  {
+    "utc": "2026-11-08T15:19:32.775183+00:00",
+    "new_pods": 2,
+    "new_ready": 0,
+    "old_pods_present": true,
+    "ready_endpoints": 0
+  },
+  {
+    "utc": "2026-11-08T15:19:33.533755+00:00",
+    "new_pods": 2,
+    "new_ready": 0,
+    "old_pods_present": true,
+    "ready_endpoints": 0
+  },
+  {
+    "utc": "2026-11-08T15:19:34.307733+00:00",
+    "new_pods": 2,
+    "new_ready": 0,
+    "old_pods_present": true,
+    "ready_endpoints": 0
+  },
+  {
+    "utc": "2026-11-08T15:19:35.113966+00:00",
+    "new_pods": 2,
+    "new_ready": 0,
+    "old_pods_present": true,
+    "ready_endpoints": 0
+  },
+  {
+    "utc": "2026-11-08T15:19:35.906673+00:00",
+    "new_pods": 2,
+    "new_ready": 0,
+    "old_pods_present": true,
+    "ready_endpoints": 0
+  },
+  {
+    "utc": "2026-11-08T15:19:36.788521+00:00",
+    "new_pods": 2,
+    "new_ready": 0,
+    "old_pods_present": true,
+    "ready_endpoints": 0
+  },
+  {
+    "utc": "2026-11-08T15:19:37.582700+00:00",
+    "new_pods": 2,
+    "new_ready": 0,
+    "old_pods_present": false,
+    "ready_endpoints": 0
+  },
+  {
+    "utc": "2026-11-08T15:19:38.304883+00:00",
+    "new_pods": 2,
+    "new_ready": 2,
+    "old_pods_present": false,
+    "ready_endpoints": 2
+  }
+]

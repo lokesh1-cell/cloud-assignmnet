@@ -1,0 +1,98 @@
+{
+  "v1": {
+    "archive_sha256": "d6787452ecccf40acff3e62bae3efa0b9006fa5e6c09ffec1724eac31f09afdd",
+    "files_verified": {
+      "config.json": "eae97b1ba03aa0cf7146d35c42d28c1e86a19f6671fe6782a603e2da7d529154",
+      "generation_config.json": "e4a8bc688f4adf91d345546aa0773f8ca0b59481c76926a6f3bb27d5b95f0540",
+      "model.safetensors": "c5de979e3eb8fbcfcb0cdf57eaf1844bcb2c263bdc93353fc2a27c8be5d9f805",
+      "special_tokens_map.json": "57491904f8680d4b52ed440f1f7ba48cad1c31ecf3eb453b03484e6ff4723ae8",
+      "tokenizer.json": "870f4e2baa6b683221fa52004d5d6f40ab8c9d31961617304b78c910c2c3caf2",
+      "tokenizer_config.json": "3c4f587ac3a67c3964d3e84248f95ffc8e4f0e64d9de677692df39aa35eb2d11",
+      "version_info.json": "42977ec0b0934503e78f5aff43d2cbec79d351b1523bc3777efb93886fa2db82"
+    },
+    "metadata": {
+      "version": "v1",
+      "base_model": "EleutherAI/pythia-70m",
+      "teacher_model": "phi3.5",
+      "seed": 42,
+      "epochs": 3,
+      "training_examples": 1500,
+      "config": {
+        "model_name": "EleutherAI/pythia-70m",
+        "seed": 42,
+        "learning_rate": 5e-05,
+        "batch_size": 8,
+        "epochs": 3,
+        "max_seq_len": 128,
+        "train_limit": 1500,
+        "train_file": "v1/train.jsonl",
+        "datasets_bucket": "datasets",
+        "models_bucket": "models",
+        "library_versions": {
+          "python": "3.11",
+          "torch": "2.4.1",
+          "transformers": "4.44.2",
+          "pyyaml": "6.0.2",
+          "boto3": "1.35.76"
+        }
+      },
+      "python": "3.11.18",
+      "libraries": {
+        "torch": "2.4.1+cpu",
+        "transformers": "4.44.2",
+        "tokenizers": "0.19.1",
+        "boto3": "1.35.76",
+        "pyyaml": "6.0.2"
+      },
+      "training_data_sha256": "5cda236a5762e5b0d56b0d502be90410e3b321205f5007b18c7154d453823f40"
+    }
+  },
+  "v2": {
+    "archive_sha256": "9b31910d8df1f85750c69785eeba46729846d6dd36b769fbeb2779f149ce782e",
+    "files_verified": {
+      "config.json": "eae97b1ba03aa0cf7146d35c42d28c1e86a19f6671fe6782a603e2da7d529154",
+      "generation_config.json": "e4a8bc688f4adf91d345546aa0773f8ca0b59481c76926a6f3bb27d5b95f0540",
+      "model.safetensors": "d27a15597f29875cdd1b21bfe10ca2b0576da79b58fd68fbfcabb2af8f393b55",
+      "special_tokens_map.json": "57491904f8680d4b52ed440f1f7ba48cad1c31ecf3eb453b03484e6ff4723ae8",
+      "tokenizer.json": "870f4e2baa6b683221fa52004d5d6f40ab8c9d31961617304b78c910c2c3caf2",
+      "tokenizer_config.json": "3c4f587ac3a67c3964d3e84248f95ffc8e4f0e64d9de677692df39aa35eb2d11",
+      "version_info.json": "bf7ef6548e4e180d5cbec70d12055b316134b46244d947a95c5150114447e35c"
+    },
+    "metadata": {
+      "version": "v2",
+      "base_model": "EleutherAI/pythia-70m",
+      "teacher_model": "phi3.5",
+      "seed": 7,
+      "epochs": 3,
+      "training_examples": 1500,
+      "config": {
+        "model_name": "EleutherAI/pythia-70m",
+        "seed": 42,
+        "learning_rate": 5e-05,
+        "batch_size": 8,
+        "epochs": 3,
+        "max_seq_len": 128,
+        "train_limit": 1500,
+        "train_file": "v1/train.jsonl",
+        "datasets_bucket": "datasets",
+        "models_bucket": "models",
+        "library_versions": {
+          "python": "3.11",
+          "torch": "2.4.1",
+          "transformers": "4.44.2",
+          "pyyaml": "6.0.2",
+          "boto3": "1.35.76"
+        }
+      },
+      "python": "3.11.18",
+      "libraries": {
+        "torch": "2.4.1+cpu",
+        "transformers": "4.44.2",
+        "tokenizers": "0.19.1",
+        "boto3": "1.35.76",
+        "pyyaml": "6.0.2"
+      },
+      "training_data_sha256": "5cda236a5762e5b0d56b0d502be90410e3b321205f5007b18c7154d453823f40"
+    }
+  }
+}

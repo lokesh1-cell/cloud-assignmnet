@@ -1,0 +1,19 @@
+{
+  "state": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 0,
+    "Error": "",
+    "StartedAt": "2026-11-08T15:18:30.667333234Z",
+    "FinishedAt": "2026-11-08T15:18:57.517615129Z"
+  },
+  "image": "sha256:903f49c4d1209946200aebe4992986a4e256832eddf5322403884218c15c03a0",
+  "cpu_limit_nano": 1000000000,
+  "memory_limit_bytes": 1073741824,
+  "memory_swap_limit_bytes": 1073741824
+}

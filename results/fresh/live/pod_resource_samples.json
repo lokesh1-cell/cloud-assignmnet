@@ -1,0 +1,744 @@
+[
+  {
+    "utc": "2026-11-08T15:19:38.521791+00:00",
+    "top": "",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:19:40.774542+00:00",
+    "top": "",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:19:43.018079+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   369m         335Mi           \ncommand-parser-5766cbf9cb-jvg2g   581m         378Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:19:45.359549+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   369m         335Mi           \ncommand-parser-5766cbf9cb-jvg2g   581m         378Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:19:47.634538+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   369m         335Mi           \ncommand-parser-5766cbf9cb-jvg2g   581m         378Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:19:49.945272+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   369m         335Mi           \ncommand-parser-5766cbf9cb-jvg2g   581m         378Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:19:52.252702+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   369m         335Mi           \ncommand-parser-5766cbf9cb-jvg2g   581m         378Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:19:54.575983+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   369m         335Mi           \ncommand-parser-5766cbf9cb-jvg2g   581m         378Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:19:56.890540+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1009m        380Mi           \ncommand-parser-5766cbf9cb-jvg2g   779m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:19:59.179556+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1009m        380Mi           \ncommand-parser-5766cbf9cb-jvg2g   779m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:01.537462+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1009m        380Mi           \ncommand-parser-5766cbf9cb-jvg2g   779m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:03.833043+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1009m        380Mi           \ncommand-parser-5766cbf9cb-jvg2g   779m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:06.140760+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1009m        380Mi           \ncommand-parser-5766cbf9cb-jvg2g   779m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:08.461603+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1009m        380Mi           \ncommand-parser-5766cbf9cb-jvg2g   779m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:10.782210+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1009m        380Mi           \ncommand-parser-5766cbf9cb-jvg2g   779m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:13.159755+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   999m         410Mi           \ncommand-parser-5766cbf9cb-jvg2g   686m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:15.487520+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   999m         410Mi           \ncommand-parser-5766cbf9cb-jvg2g   686m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:17.760193+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   999m         410Mi           \ncommand-parser-5766cbf9cb-jvg2g   686m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:20.067537+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   999m         410Mi           \ncommand-parser-5766cbf9cb-jvg2g   686m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:22.355241+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   999m         410Mi           \ncommand-parser-5766cbf9cb-jvg2g   686m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:24.612551+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   999m         410Mi           \ncommand-parser-5766cbf9cb-jvg2g   686m         380Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:26.948202+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        434Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:29.248388+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        434Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:31.579334+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        434Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:33.874655+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        434Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:36.152383+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        434Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:38.447441+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        434Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:40.822569+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        434Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:43.077263+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   999m         440Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:45.420943+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   999m         440Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:47.749252+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   999m         440Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:50.000470+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   999m         440Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:52.263434+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   999m         440Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:54.531674+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   999m         440Mi           \ncommand-parser-5766cbf9cb-jvg2g   684m         386Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:56.832348+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   689m         400Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:20:59.153553+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   689m         400Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:01.405066+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   689m         400Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:03.724447+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   689m         400Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:06.051101+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   689m         400Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:08.391598+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   689m         400Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:10.645768+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   689m         400Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:12.963095+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   694m         409Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:15.263686+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   694m         409Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:17.569659+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   694m         409Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:19.828247+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   694m         409Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:22.072306+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   694m         409Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:24.372969+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        435Mi           \ncommand-parser-5766cbf9cb-jvg2g   694m         409Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:26.695078+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        442Mi           \ncommand-parser-5766cbf9cb-jvg2g   705m         409Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:28.968175+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        442Mi           \ncommand-parser-5766cbf9cb-jvg2g   705m         409Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:31.255438+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        442Mi           \ncommand-parser-5766cbf9cb-jvg2g   705m         409Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:33.504139+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        442Mi           \ncommand-parser-5766cbf9cb-jvg2g   705m         409Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:35.813930+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        442Mi           \ncommand-parser-5766cbf9cb-jvg2g   705m         409Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  },
+  {
+    "utc": "2026-11-08T15:21:38.161410+00:00",
+    "top": "NAME                              CPU(cores)   MEMORY(bytes)   \ncommand-parser-5766cbf9cb-5cglq   1000m        442Mi           \ncommand-parser-5766cbf9cb-jvg2g   705m         409Mi           \n",
+    "pods": [
+      {
+        "name": "command-parser-5766cbf9cb-5cglq",
+        "ready": true
+      },
+      {
+        "name": "command-parser-5766cbf9cb-jvg2g",
+        "ready": true
+      }
+    ]
+  }
+]

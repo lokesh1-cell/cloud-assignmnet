@@ -1,0 +1,8 @@
+python training/train.py --version v1 --subset 50
+[train] 50 examples, version=v1, seed=42, epochs=3
+[train] epoch 1/3 loss 1.122922
+[train] epoch 2/3 loss 0.261666
+[train] epoch 3/3 loss 0.176564
+[train] saved model + tokenizer to /home/runner/work/cloud-assignmnet/cloud-assignmnet/models/v1
+[train] v1.tar.gz sha256 5ac67120ea43e352d500428a94afd490c860d5a2156e78d76e8e978361cd8144
+[train] uploaded files to models/v1/

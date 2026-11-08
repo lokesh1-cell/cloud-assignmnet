@@ -1,0 +1,16 @@
+{
+  "raw_rows": 3000,
+  "unique_ids": 3000,
+  "empty_replies": 0,
+  "cleaning_counts": {
+    "input": 3000,
+    "a": 0,
+    "b": 1,
+    "c": 4,
+    "d": 98,
+    "duplicates": 49,
+    "kept": 2848
+  },
+  "train_sha256": "5cda236a5762e5b0d56b0d502be90410e3b321205f5007b18c7154d453823f40",
+  "exact_reproduction": true
+}

@@ -1,0 +1,34 @@
+NAMESPACE     NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+app           deployment.apps/command-parser           1/1     1            1           12m
+data          deployment.apps/seaweedfs                1/1     1            1           13m
+kube-system   deployment.apps/coredns                  1/1     1            1           15m
+kube-system   deployment.apps/local-path-provisioner   1/1     1            1           15m
+kube-system   deployment.apps/metrics-server           1/1     1            1           15m
+kube-system   deployment.apps/traefik                  1/1     1            1           15m
+
+NAMESPACE     NAME                     TYPE           CLUSTER-IP      EXTERNAL-IP             PORT(S)                      AGE
+app           service/command-parser   ClusterIP      10.43.43.247    <none>                  80/TCP                       12m
+data          service/seaweedfs        ClusterIP      10.43.174.112   <none>                  8333/TCP,9333/TCP,8888/TCP   13m
+default       service/kubernetes       ClusterIP      10.43.0.1       <none>                  443/TCP                      15m
+kube-system   service/kube-dns         ClusterIP      10.43.0.10      <none>                  53/UDP,53/TCP,9153/TCP       15m
+kube-system   service/metrics-server   ClusterIP      10.43.225.62    <none>                  443/TCP                      15m
+kube-system   service/traefik          LoadBalancer   10.43.12.2      172.18.0.2,172.18.0.3   80:31675/TCP,443:30260/TCP   15m
+
+NAMESPACE   NAME                                       CLASS     HOSTS   ADDRESS                 PORTS   AGE
+app         ingress.networking.k8s.io/command-parser   traefik   *       172.18.0.2,172.18.0.3   80      12m
+
+NAMESPACE   NAME                                                 REFERENCE                   TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+app         horizontalpodautoscaler.autoscaling/command-parser   Deployment/command-parser   cpu: 0%/70%   1         2         2          3m48s
+
+NAMESPACE     NAME                                          READY   STATUS        RESTARTS   AGE
+app           pod/command-parser-5766cbf9cb-mf2wv           1/1     Terminating   0          3m33s
+app           pod/command-parser-5766cbf9cb-z949x           1/1     Running       0          8m15s
+data          pod/seaweedfs-558dd48668-kj5r7                1/1     Running       0          13m
+kube-system   pod/coredns-7b98449c4-t942k                   1/1     Running       0          15m
+kube-system   pod/helm-install-traefik-crd-4czxr            0/1     Completed     0          15m
+kube-system   pod/helm-install-traefik-qnhr8                0/1     Completed     1          15m
+kube-system   pod/local-path-provisioner-595dcfc56f-cptn4   1/1     Running       0          15m
+kube-system   pod/metrics-server-cdcc87586-dvxwj            1/1     Running       0          15m
+kube-system   pod/svclb-traefik-4f7ed0f4-n9dk9              2/2     Running       0          15m
+kube-system   pod/svclb-traefik-4f7ed0f4-vwj5n              2/2     Running       0          15m
+kube-system   pod/traefik-d7c9c5778-fmx8c                   1/1     Running       0          15m

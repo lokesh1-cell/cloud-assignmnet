@@ -1,0 +1,18 @@
+2026-11-08T15:19:31.044845850Z INFO:     Started server process [1]
+2026-11-08T15:19:31.044875124Z INFO:     Waiting for application startup.
+2026-11-08T15:19:31.045416856Z INFO:     Application startup complete.
+2026-11-08T15:19:31.053420367Z INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-11-08T15:19:33.014079786Z downloading model from s3://models/v1
+2026-11-08T15:19:33.044250562Z downloaded s3://models/v1/config.json
+2026-11-08T15:19:33.049178420Z downloaded s3://models/v1/files.sha256
+2026-11-08T15:19:33.054760010Z downloaded s3://models/v1/generation_config.json
+2026-11-08T15:19:36.072070445Z INFO:     10.42.1.1:52810 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+2026-11-08T15:19:37.149461037Z downloaded s3://models/v1/model.safetensors
+2026-11-08T15:19:37.155316374Z downloaded s3://models/v1/model.sha256
+2026-11-08T15:19:37.160320168Z downloaded s3://models/v1/special_tokens_map.json
+2026-11-08T15:19:37.198786529Z downloaded s3://models/v1/tokenizer.json
+2026-11-08T15:19:37.206931051Z downloaded s3://models/v1/tokenizer_config.json
+2026-11-08T15:19:37.213754821Z downloaded s3://models/v1/version_info.json
+2026-11-08T15:19:37.213768196Z model download complete: 9 objects
+2026-11-08T15:19:37.887487018Z model loaded (version v1)
+2026-11-08T15:19:38.056408020Z INFO:     10.42.1.1:52814 - "GET /readyz HTTP/1.1" 200 OK

@@ -1,0 +1,702 @@
+[
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:35 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "71",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_remove\",\"date\":\"upcoming\",\"time\":null,\"place\":null}",
+    "seconds": 0.5980218450000052
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:37 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "80",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"alarm_set\",\"date\":\"sunday\",\"time\":\"five in the morning\",\"place\":null}",
+    "seconds": 0.45175955099995235
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:38 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "71",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":null,\"time\":\"right now\",\"place\":null}",
+    "seconds": 0.3726376380000147
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:38 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "64",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":null,\"time\":null,\"place\":null}",
+    "seconds": 0.35001494300001923
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:38 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "68",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"alarm_set\",\"date\":\"tuesday\",\"time\":\"six pm\",\"place\":null}",
+    "seconds": 0.419971328000031
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:39 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "74",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_set\",\"date\":\"this afternoon\",\"time\":null,\"place\":null}",
+    "seconds": 0.3760698259999913
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:39 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "71",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":\"oneteenth\",\"time\":null,\"place\":null}",
+    "seconds": 0.37764030799996817
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:39 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "74",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_query\",\"date\":\"this weekend\",\"time\":null,\"place\":null}",
+    "seconds": 0.3744800370000121
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:40 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "84",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":null,\"time\":\"central time zone\",\"place\":\"central\"}",
+    "seconds": 0.4139533569999685
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:40 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "76",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":\"datetime_query\",\"time\":null,\"place\":null}",
+    "seconds": 0.3956881210000347
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:41 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "70",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"weather_query\",\"date\":\"this week\",\"time\":null,\"place\":null}",
+    "seconds": 0.37828969899999265
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:41 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "65",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":null,\"time\":null,\"place\":\"pst\"}",
+    "seconds": 0.37329227700001866
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:41 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "76",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"recommendation_events\",\"date\":null,\"time\":null,\"place\":\"neville\"}",
+    "seconds": 0.39865768900000376
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:42 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "76",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_query\",\"date\":\"this afternoon\",\"time\":null,\"place\":null}",
+    "seconds": 0.3764420279999854
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:42 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "68",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_remove\",\"date\":\"today\",\"time\":null,\"place\":null}",
+    "seconds": 0.35866159500000094
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:42 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "62",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_set\",\"date\":null,\"time\":null,\"place\":null}",
+    "seconds": 0.34813552200000686
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:43 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "66",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"alarm_set\",\"date\":\"this time\",\"time\":null,\"place\":null}",
+    "seconds": 0.38620800000001054
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:43 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "80",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_set\",\"date\":\"tomorrow\",\"time\":\"an hour before\",\"place\":null}",
+    "seconds": 0.42862020800004075
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:44 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "64",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_query\",\"date\":null,\"time\":null,\"place\":null}",
+    "seconds": 0.34637071599996716
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:44 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "69",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"weather_query\",\"date\":null,\"time\":null,\"place\":\"our city\"}",
+    "seconds": 0.3786607549999985
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:44 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "71",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"recommendation_events\",\"date\":null,\"time\":null,\"place\":\"me\"}",
+    "seconds": 0.3965680080000311
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:45 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "62",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_set\",\"date\":null,\"time\":null,\"place\":null}",
+    "seconds": 0.3499198790000264
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:45 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "76",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_set\",\"date\":\"every june third\",\"time\":null,\"place\":null}",
+    "seconds": 0.400660605999974
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:45 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "64",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":null,\"time\":null,\"place\":null}",
+    "seconds": 0.34930140300002677
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:46 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "70",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":null,\"time\":null,\"place\":\"new york\"}",
+    "seconds": 0.39015460099994925
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:46 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "75",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":null,\"time\":null,\"place\":\"new york city\"}",
+    "seconds": 0.4080139730000383
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:47 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "67",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_query\",\"date\":\"today\",\"time\":null,\"place\":null}",
+    "seconds": 0.35912687900002993
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:47 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "66",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"weather_query\",\"date\":null,\"time\":\"beach\",\"place\":null}",
+    "seconds": 0.374300618999996
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:47 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "68",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"alarm_query\",\"date\":\"right now\",\"time\":null,\"place\":null}",
+    "seconds": 0.3874994390000097
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:48 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "63",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"alarm_set\",\"date\":null,\"time\":\"ten am\",\"place\":null}",
+    "seconds": 0.3898193080000283
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:48 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "67",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_query\",\"date\":\"today\",\"time\":null,\"place\":null}",
+    "seconds": 0.3568036610000149
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:49 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "71",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":\"this year\",\"time\":null,\"place\":null}",
+    "seconds": 0.3787859450000042
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:49 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "83",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"alarm_set\",\"date\":\"next tuesday\",\"time\":\"eight hundred am\",\"place\":null}",
+    "seconds": 0.4481384440000511
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:49 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "71",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"recommendation_events\",\"date\":null,\"time\":null,\"place\":null}",
+    "seconds": 0.38056418200000053
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:50 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "62",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"alarm_set\",\"date\":\"today\",\"time\":null,\"place\":null}",
+    "seconds": 0.38208452200001375
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:50 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "67",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"alarm_query\",\"date\":null,\"time\":\"seven am\",\"place\":null}",
+    "seconds": 0.38979514400000426
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:50 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "71",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_set\",\"date\":\"tomorrow\",\"time\":\"seven\",\"place\":null}",
+    "seconds": 0.3913345900000422
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:51 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "67",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_set\",\"date\":\"monday\",\"time\":\"six\",\"place\":null}",
+    "seconds": 0.39803319200001397
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:51 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "75",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_set\",\"date\":\"my daughter\",\"time\":null,\"place\":\"wyatts\"}",
+    "seconds": 0.4074605819999988
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:52 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "64",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"alarm_set\",\"date\":null,\"time\":\"in hour\",\"place\":null}",
+    "seconds": 0.3889240759999666
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:52 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "72",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":null,\"time\":null,\"place\":\"california\"}",
+    "seconds": 0.3866827180000314
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:52 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "69",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":null,\"time\":null,\"place\":\"beijing\"}",
+    "seconds": 0.3710918980000315
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:53 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "61",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"alarm_query\",\"date\":null,\"time\":null,\"place\":null}",
+    "seconds": 0.3597163940000314
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:53 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "71",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":\"fifteenth\",\"time\":null,\"place\":null}",
+    "seconds": 0.38300263799999357
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:54 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "70",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"alarm_set\",\"date\":\"next tuesdays\",\"time\":null,\"place\":null}",
+    "seconds": 0.42582722899999226
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:54 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "71",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_set\",\"date\":\"this friday\",\"time\":null,\"place\":null}",
+    "seconds": 0.3973878259999992
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:54 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "64",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"datetime_query\",\"date\":null,\"time\":null,\"place\":null}",
+    "seconds": 0.3598060799999985
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:55 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "69",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_remove\",\"date\":null,\"time\":\"one pm\",\"place\":null}",
+    "seconds": 0.3816955890000031
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:55 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "82",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_query\",\"date\":\"the first of january\",\"time\":null,\"place\":null}",
+    "seconds": 0.43716668399997616
+  },
+  {
+    "status": 200,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:18:56 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "76",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"intent\":\"calendar_set\",\"date\":\"today\",\"time\":\"one pm\",\"place\":\"joe smith\"}",
+    "seconds": 0.47398321200000737
+  }
+]

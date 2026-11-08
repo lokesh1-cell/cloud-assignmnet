@@ -1,0 +1,12 @@
+Cleaning counts
+  input records          3000
+  (a) invalid JSON       0
+  (b) wrong keys         1
+  (c) bad intent         4
+  (d) invented slot      98
+  duplicates removed     49
+  kept                   2848
+  check a+b+c+d+dup+kept  3000 (== input: True)
+
+wrote datasets/v1/train.jsonl  (2848 records)
+sha256 5cda236a5762e5b0d56b0d502be90410e3b321205f5007b18c7154d453823f40

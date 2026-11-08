@@ -1,0 +1,192 @@
+{
+  "container": {
+    "image_bytes": 1267334183,
+    "credential_source": "Kubernetes Secret app/s3-credentials",
+    "image_under_2gb": true,
+    "requests": 50,
+    "successful": 50,
+    "oom_killed": false,
+    "exit_code": 0,
+    "memory_peak_bytes": 793964544,
+    "cpu_limit_nano": 1000000000,
+    "memory_limit_bytes": 1073741824,
+    "memory_swap_limit_bytes": 1073741824
+  },
+  "fault_injection": {
+    "status": 500,
+    "headers": {
+      "date": "Sun, 08 Nov 2026 15:19:02 GMT",
+      "server": "uvicorn",
+      "x-model-version": "v1",
+      "x-served-by": "runnervm7aw5e",
+      "content-length": "32",
+      "content-type": "application/json",
+      "connection": "close"
+    },
+    "body": "{\"error\":\"invalid_model_output\"}",
+    "seconds": 0.5810484340000244
+  },
+  "cold_start": {
+    "runs": [
+      {
+        "run": 1,
+        "pod_seconds": [
+          9.0,
+          9.0
+        ],
+        "run_seconds": 9.0,
+        "no_endpoints_while_unready_observed": true
+      },
+      {
+        "run": 2,
+        "pod_seconds": [
+          8.0,
+          8.0
+        ],
+        "run_seconds": 8.0,
+        "no_endpoints_while_unready_observed": true
+      },
+      {
+        "run": 3,
+        "pod_seconds": [
+          9.0,
+          9.0
+        ],
+        "run_seconds": 9.0,
+        "no_endpoints_while_unready_observed": true
+      }
+    ],
+    "median_seconds": 9.0
+  },
+  "loadtest": {
+    "requests": 353,
+    "failures": 0,
+    "failure_percent": 0.0,
+    "p50_ms": 1200.0,
+    "p95_ms": 2500.0,
+    "rps": 2.9425162385250454,
+    "locust_exit": 0,
+    "headers": {
+      "per_replica": {
+        "command-parser-5766cbf9cb-jvg2g": 180,
+        "command-parser-5766cbf9cb-5cglq": 176
+      },
+      "per_model_version": {
+        "v1": 356
+      }
+    },
+    "headers_match_successes": false,
+    "replica_shares": {
+      "command-parser-5766cbf9cb-jvg2g": 0.5056179775280899,
+      "command-parser-5766cbf9cb-5cglq": 0.4943820224719101
+    },
+    "each_replica_30_percent": true
+  },
+  "rolling_update": {
+    "requests": 548,
+    "failures": 1,
+    "failure_percent": 0.18248175182481752,
+    "p50_ms": 1100.0,
+    "p95_ms": 2500.0,
+    "rps": 3.0456293630280946,
+    "locust_exit": 1,
+    "headers": {
+      "per_replica": {
+        "command-parser-5766cbf9cb-jvg2g": 40,
+        "command-parser-5766cbf9cb-5cglq": 32,
+        "command-parser-6f77b7f4c6-wrgsb": 28,
+        "command-parser-6f77b7f4c6-2x2dw": 32,
+        "command-parser-5766cbf9cb-kgfnt": 215,
+        "command-parser-5766cbf9cb-z949x": 203
+      },
+      "per_model_version": {
+        "v1": 490,
+        "v2": 60
+      }
+    },
+    "headers_match_successes": false,
+    "rollout": "Waiting for deployment \"command-parser\" rollout to finish: 1 out of 2 new replicas have been updated...\nWaiting for deployment \"command-parser\" rollout to finish: 1 out of 2 new replicas have been updated...\nWaiting for deployment \"command-parser\" rollout to finish: 1 out of 2 new replicas have been updated...\nWaiting for deployment \"command-parser\" rollout to finish: 1 old replicas are pending termination...\nWaiting for deployment \"command-parser\" rollout to finish: 1 old replicas are pending termination...\ndeployment \"command-parser\" successfully rolled out\n",
+    "rollback": "Waiting for deployment \"command-parser\" rollout to finish: 1 out of 2 new replicas have been updated...\nWaiting for deployment \"command-parser\" rollout to finish: 1 out of 2 new replicas have been updated...\nWaiting for deployment \"command-parser\" rollout to finish: 1 out of 2 new replicas have been updated...\nWaiting for deployment \"command-parser\" rollout to finish: 1 old replicas are pending termination...\nWaiting for deployment \"command-parser\" rollout to finish: 1 old replicas are pending termination...\ndeployment \"command-parser\" successfully rolled out\n",
+    "after_update": {
+      "status": 200,
+      "headers": {
+        "Content-Length": "67",
+        "Content-Type": "application/json",
+        "Date": "Sun, 08 Nov 2026 15:22:04 GMT",
+        "Server": "uvicorn",
+        "X-Model-Version": "v2",
+        "X-Served-By": "command-parser-6f77b7f4c6-wrgsb",
+        "Connection": "close"
+      },
+      "body": "{\"intent\":\"weather_query\",\"date\":null,\"time\":null,\"place\":\"london\"}",
+      "seconds": 1.6640649790000452
+    },
+    "after_rollback": {
+      "status": 200,
+      "headers": {
+        "Content-Length": "67",
+        "Content-Type": "application/json",
+        "Date": "Sun, 08 Nov 2026 15:22:23 GMT",
+        "Server": "uvicorn",
+        "X-Model-Version": "v1",
+        "X-Served-By": "command-parser-5766cbf9cb-kgfnt",
+        "Connection": "close"
+      },
+      "body": "{\"intent\":\"weather_query\",\"date\":null,\"time\":null,\"place\":\"london\"}",
+      "seconds": 1.6771492000000308
+    },
+    "v1_restored": true,
+    "target_met": true
+  },
+  "recovery": {
+    "requests": 354,
+    "failures": 0,
+    "failure_percent": 0.0,
+    "p50_ms": 1100.0,
+    "p95_ms": 2600.0,
+    "rps": 2.947667243448078,
+    "locust_exit": 0,
+    "headers": {
+      "per_replica": {
+        "command-parser-5766cbf9cb-kgfnt": 20,
+        "command-parser-5766cbf9cb-z949x": 184,
+        "command-parser-5766cbf9cb-pjqpp": 152
+      },
+      "per_model_version": {
+        "v1": 356
+      }
+    },
+    "headers_match_successes": false,
+    "deleted": "pod \"command-parser-5766cbf9cb-kgfnt\" deleted from app namespace\n",
+    "restored_seconds": 7.422944838000035,
+    "restored_pods": [
+      "command-parser-5766cbf9cb-pjqpp",
+      "command-parser-5766cbf9cb-z949x"
+    ],
+    "target_met": true
+  },
+  "hpa_load": {
+    "requests": 522,
+    "failures": 0,
+    "failure_percent": 0.0,
+    "p50_ms": 1100.0,
+    "p95_ms": 2600.0,
+    "rps": 2.9007670614943555,
+    "locust_exit": 0,
+    "headers": {
+      "per_replica": {
+        "command-parser-5766cbf9cb-z949x": 278,
+        "command-parser-5766cbf9cb-mf2wv": 246
+      },
+      "per_model_version": {
+        "v1": 524
+      }
+    },
+    "headers_match_successes": false
+  },
+  "hpa_cycle": {
+    "scaled_1_to_2": true,
+    "scaled_back_to_1": true,
+    "idle_wait_seconds": 41.77176160500005
+  }
+}

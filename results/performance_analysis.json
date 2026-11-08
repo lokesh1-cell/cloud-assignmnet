@@ -1,0 +1,39 @@
+{
+  "source": "live_summary.json CSV snapshots; final console and header totals are separately preserved",
+  "pod_resources": {
+    "command-parser-5766cbf9cb-5cglq": {
+      "cpu_millicores": {
+        "min": 369,
+        "max": 1009
+      },
+      "memory_mib": {
+        "min": 335,
+        "max": 442
+      }
+    },
+    "command-parser-5766cbf9cb-jvg2g": {
+      "cpu_millicores": {
+        "min": 581,
+        "max": 779
+      },
+      "memory_mib": {
+        "min": 378,
+        "max": 409
+      }
+    }
+  },
+  "container_peak_mib": 757.18359375,
+  "hourly_inr": 7.9,
+  "rps_csv": 2.9425162385250454,
+  "requests_hour": 10593.058458690164,
+  "cost_1000_inr": 0.7457713965053335,
+  "slo": {
+    "target_success_percent": 99,
+    "window": "one 2-minute standard load run, CSV snapshot",
+    "requests": 353,
+    "fractional_error_budget": 3.53,
+    "whole_failures_allowed": 3,
+    "failures_used": 0
+  },
+  "snapshot_note": "CSV 353 requests p50 1200ms; final console 356 requests p50 1400ms after draining in-flight work. Both have 0 failures and p95 2500ms. Final headers 180+176=356. Do not mix denominators."
+}

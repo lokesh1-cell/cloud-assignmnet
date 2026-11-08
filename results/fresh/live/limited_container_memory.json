@@ -1,0 +1,42 @@
+[
+  {
+    "utc": "2026-11-08T15:18:37.007755+00:00",
+    "stats": "{\"BlockIO\":\"137MB / 285MB\",\"CPUPerc\":\"98.79%\",\"Container\":\"limited-parser\",\"ID\":\"4193c377f610\",\"MemPerc\":\"41.65%\",\"MemUsage\":\"426.5MiB / 1GiB\",\"Name\":\"limited-parser\",\"NetIO\":\"0B / 0B\",\"PIDs\":\"10\"}"
+  },
+  {
+    "utc": "2026-11-08T15:18:39.035004+00:00",
+    "stats": "{\"BlockIO\":\"137MB / 285MB\",\"CPUPerc\":\"101.60%\",\"Container\":\"limited-parser\",\"ID\":\"4193c377f610\",\"MemPerc\":\"41.76%\",\"MemUsage\":\"427.6MiB / 1GiB\",\"Name\":\"limited-parser\",\"NetIO\":\"0B / 0B\",\"PIDs\":\"10\"}"
+  },
+  {
+    "utc": "2026-11-08T15:18:41.058685+00:00",
+    "stats": "{\"BlockIO\":\"137MB / 285MB\",\"CPUPerc\":\"102.36%\",\"Container\":\"limited-parser\",\"ID\":\"4193c377f610\",\"MemPerc\":\"41.76%\",\"MemUsage\":\"427.6MiB / 1GiB\",\"Name\":\"limited-parser\",\"NetIO\":\"0B / 0B\",\"PIDs\":\"10\"}"
+  },
+  {
+    "utc": "2026-11-08T15:18:43.083223+00:00",
+    "stats": "{\"BlockIO\":\"137MB / 285MB\",\"CPUPerc\":\"101.74%\",\"Container\":\"limited-parser\",\"ID\":\"4193c377f610\",\"MemPerc\":\"42.29%\",\"MemUsage\":\"433.1MiB / 1GiB\",\"Name\":\"limited-parser\",\"NetIO\":\"0B / 0B\",\"PIDs\":\"10\"}"
+  },
+  {
+    "utc": "2026-11-08T15:18:45.106669+00:00",
+    "stats": "{\"BlockIO\":\"137MB / 285MB\",\"CPUPerc\":\"101.40%\",\"Container\":\"limited-parser\",\"ID\":\"4193c377f610\",\"MemPerc\":\"42.32%\",\"MemUsage\":\"433.3MiB / 1GiB\",\"Name\":\"limited-parser\",\"NetIO\":\"0B / 0B\",\"PIDs\":\"10\"}"
+  },
+  {
+    "utc": "2026-11-08T15:18:47.132018+00:00",
+    "stats": "{\"BlockIO\":\"137MB / 285MB\",\"CPUPerc\":\"101.74%\",\"Container\":\"limited-parser\",\"ID\":\"4193c377f610\",\"MemPerc\":\"42.34%\",\"MemUsage\":\"433.5MiB / 1GiB\",\"Name\":\"limited-parser\",\"NetIO\":\"0B / 0B\",\"PIDs\":\"10\"}"
+  },
+  {
+    "utc": "2026-11-08T15:18:49.156698+00:00",
+    "stats": "{\"BlockIO\":\"137MB / 285MB\",\"CPUPerc\":\"102.14%\",\"Container\":\"limited-parser\",\"ID\":\"4193c377f610\",\"MemPerc\":\"42.29%\",\"MemUsage\":\"433.1MiB / 1GiB\",\"Name\":\"limited-parser\",\"NetIO\":\"0B / 0B\",\"PIDs\":\"10\"}"
+  },
+  {
+    "utc": "2026-11-08T15:18:51.181635+00:00",
+    "stats": "{\"BlockIO\":\"137MB / 285MB\",\"CPUPerc\":\"101.91%\",\"Container\":\"limited-parser\",\"ID\":\"4193c377f610\",\"MemPerc\":\"42.76%\",\"MemUsage\":\"437.8MiB / 1GiB\",\"Name\":\"limited-parser\",\"NetIO\":\"0B / 0B\",\"PIDs\":\"10\"}"
+  },
+  {
+    "utc": "2026-11-08T15:18:53.204640+00:00",
+    "stats": "{\"BlockIO\":\"137MB / 285MB\",\"CPUPerc\":\"101.63%\",\"Container\":\"limited-parser\",\"ID\":\"4193c377f610\",\"MemPerc\":\"42.78%\",\"MemUsage\":\"438.1MiB / 1GiB\",\"Name\":\"limited-parser\",\"NetIO\":\"0B / 0B\",\"PIDs\":\"10\"}"
+  },
+  {
+    "utc": "2026-11-08T15:18:55.229967+00:00",
+    "stats": "{\"BlockIO\":\"137MB / 285MB\",\"CPUPerc\":\"101.82%\",\"Container\":\"limited-parser\",\"ID\":\"4193c377f610\",\"MemPerc\":\"42.81%\",\"MemUsage\":\"438.4MiB / 1GiB\",\"Name\":\"limited-parser\",\"NetIO\":\"0B / 0B\",\"PIDs\":\"10\"}"
+  }
+]

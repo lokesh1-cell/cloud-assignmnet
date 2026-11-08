@@ -1,0 +1,12 @@
+NAMESPACE     NAME                                      READY   STATUS        RESTARTS   AGE     IP           NODE                      NOMINATED NODE   READINESS GATES
+app           command-parser-5766cbf9cb-mf2wv           1/1     Terminating   0          3m33s   10.42.0.14   k3d-cloud-mini-agent-0    <none>           <none>
+app           command-parser-5766cbf9cb-z949x           1/1     Running       0          8m15s   10.42.1.15   k3d-cloud-mini-server-0   <none>           <none>
+data          seaweedfs-558dd48668-kj5r7                1/1     Running       0          13m     10.42.1.7    k3d-cloud-mini-server-0   <none>           <none>
+kube-system   coredns-7b98449c4-t942k                   1/1     Running       0          15m     10.42.1.3    k3d-cloud-mini-server-0   <none>           <none>
+kube-system   helm-install-traefik-crd-4czxr            0/1     Completed     0          15m     10.42.1.2    k3d-cloud-mini-server-0   <none>           <none>
+kube-system   helm-install-traefik-qnhr8                0/1     Completed     1          15m     10.42.0.4    k3d-cloud-mini-agent-0    <none>           <none>
+kube-system   local-path-provisioner-595dcfc56f-cptn4   1/1     Running       0          15m     10.42.0.3    k3d-cloud-mini-agent-0    <none>           <none>
+kube-system   metrics-server-cdcc87586-dvxwj            1/1     Running       0          15m     10.42.0.2    k3d-cloud-mini-agent-0    <none>           <none>
+kube-system   svclb-traefik-4f7ed0f4-n9dk9              2/2     Running       0          15m     10.42.1.4    k3d-cloud-mini-server-0   <none>           <none>
+kube-system   svclb-traefik-4f7ed0f4-vwj5n              2/2     Running       0          15m     10.42.0.5    k3d-cloud-mini-agent-0    <none>           <none>
+kube-system   traefik-d7c9c5778-fmx8c                   1/1     Running       0          15m     10.42.1.5    k3d-cloud-mini-server-0   <none>           <none>

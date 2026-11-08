@@ -1,0 +1,8 @@
+{
+  "input_ids": 3000,
+  "unique_label_ids": 3000,
+  "shards": 4,
+  "exactly_once": true,
+  "modulo_verified": true,
+  "train_sha256": "5cda236a5762e5b0d56b0d502be90410e3b321205f5007b18c7154d453823f40"
+}

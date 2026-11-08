@@ -1,0 +1,64 @@
+[pod/teacher-label-0-wnktg/worker] [shard 2/4] 750 commands, 25 already done
+[pod/teacher-label-0-wnktg/worker] [shard 2] 50/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 75/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 100/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 125/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 150/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 175/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 200/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 225/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 250/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 275/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 300/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 325/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 350/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 375/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 400/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 425/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 450/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 475/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 500/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 525/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 550/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] retry C2295 (HTTP Error 500: Internal Server Error)
+[pod/teacher-label-0-wnktg/worker] [shard 2] 575/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 600/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 625/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 650/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 675/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 700/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 725/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] 750/750
+[pod/teacher-label-0-wnktg/worker] [shard 2] done -> datasets/teacher/shard-2.jsonl
+[pod/teacher-label-1-pg9cf/worker] [shard 3/4] 750 commands, 25 already done
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 50/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 75/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 100/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 125/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 150/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 175/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 200/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 225/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 250/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 275/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 300/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 325/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 350/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 375/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 400/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 425/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 450/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 475/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 500/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 525/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 550/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] retry C2292 (HTTP Error 500: Internal Server Error)
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 575/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 600/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 625/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 650/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 675/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 700/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 725/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] 750/750
+[pod/teacher-label-1-pg9cf/worker] [shard 3] done -> datasets/teacher/shard-3.jsonl

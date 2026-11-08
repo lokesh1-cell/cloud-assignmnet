@@ -1,0 +1,6 @@
+[train] 1500 examples, version=v1, seed=42, epochs=3
+[train] epoch 1/3 loss 0.241773
+[train] epoch 2/3 loss 0.095099
+[train] epoch 3/3 loss 0.076223
+[train] saved model + tokenizer to /home/runner/work/cloud-assignmnet/cloud-assignmnet/models/v1
+[train] v1.tar.gz sha256 d6787452ecccf40acff3e62bae3efa0b9006fa5e6c09ffec1724eac31f09afdd

@@ -1,0 +1,436 @@
+apiVersion: v1
+items:
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"batch/v1","kind":"Job","metadata":{"annotations":{},"name":"teacher-label","namespace":"pipeline"},"spec":{"backoffLimit":2,"completionMode":"Indexed","completions":2,"parallelism":2,"template":{"metadata":{"labels":{"job":"teacher-label"}},"spec":{"containers":[{"args":["export SHARD_INDEX=$((JOB_COMPLETION_INDEX + SHARD_BASE)); exec python label_worker.py"],"command":["/bin/sh","-c"],"env":[{"name":"SHARD_COUNT","value":"4"},{"name":"TEACHER_MODEL","value":"phi3.5"},{"name":"DATASETS_BUCKET","value":"datasets"},{"name":"OLLAMA_HOST","value":"http://teacher:11434"},{"name":"S3_ENDPOINT","value":"http://seaweedfs.data.svc.cluster.local:8333"},{"name":"AWS_ACCESS_KEY_ID","valueFrom":{"secretKeyRef":{"key":"AWS_ACCESS_KEY_ID","name":"s3-credentials"}}},{"name":"AWS_SECRET_ACCESS_KEY","valueFrom":{"secretKeyRef":{"key":"AWS_SECRET_ACCESS_KEY","name":"s3-credentials"}}},{"name":"SHARD_BASE","value":"0"}],"image":"cloud-mini/worker:v1","imagePullPolicy":"IfNotPresent","name":"worker","resources":{"limits":{"cpu":"1","memory":"512Mi"},"requests":{"cpu":"250m","memory":"256Mi"}}}],"restartPolicy":"Never"}}}}
+    creationTimestamp: "2026-11-08T11:22:31Z"
+    generation: 1
+    labels:
+      batch.kubernetes.io/controller-uid: 3a066e5a-0273-424e-ae25-3a1db74f7131
+      batch.kubernetes.io/job-name: teacher-label
+      controller-uid: 3a066e5a-0273-424e-ae25-3a1db74f7131
+      job: teacher-label
+      job-name: teacher-label
+    name: teacher-label
+    namespace: pipeline
+    resourceVersion: "3061"
+    uid: 3a066e5a-0273-424e-ae25-3a1db74f7131
+  spec:
+    backoffLimit: 2
+    completionMode: Indexed
+    completions: 2
+    manualSelector: false
+    parallelism: 2
+    podReplacementPolicy: TerminatingOrFailed
+    selector:
+      matchLabels:
+        batch.kubernetes.io/controller-uid: 3a066e5a-0273-424e-ae25-3a1db74f7131
+    suspend: false
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          batch.kubernetes.io/controller-uid: 3a066e5a-0273-424e-ae25-3a1db74f7131
+          batch.kubernetes.io/job-name: teacher-label
+          controller-uid: 3a066e5a-0273-424e-ae25-3a1db74f7131
+          job: teacher-label
+          job-name: teacher-label
+      spec:
+        containers:
+        - args:
+          - export SHARD_INDEX=$((JOB_COMPLETION_INDEX + SHARD_BASE)); exec python
+            label_worker.py
+          command:
+          - /bin/sh
+          - -c
+          env:
+          - name: SHARD_COUNT
+            value: "4"
+          - name: TEACHER_MODEL
+            value: phi3.5
+          - name: DATASETS_BUCKET
+            value: datasets
+          - name: OLLAMA_HOST
+            value: http://teacher:11434
+          - name: S3_ENDPOINT
+            value: http://seaweedfs.data.svc.cluster.local:8333
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                key: AWS_ACCESS_KEY_ID
+                name: s3-credentials
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                key: AWS_SECRET_ACCESS_KEY
+                name: s3-credentials
+          - name: SHARD_BASE
+            value: "0"
+          image: cloud-mini/worker:v1
+          imagePullPolicy: IfNotPresent
+          name: worker
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+            requests:
+              cpu: 250m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Never
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    completedIndexes: 0,1
+    completionTime: "2026-11-08T12:47:59Z"
+    conditions:
+    - lastProbeTime: "2026-11-08T12:47:59Z"
+      lastTransitionTime: "2026-11-08T12:47:59Z"
+      status: "True"
+      type: Complete
+    ready: 0
+    startTime: "2026-11-08T11:22:31Z"
+    succeeded: 2
+    terminating: 0
+    uncountedTerminatedPods: {}
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      batch.kubernetes.io/job-completion-index: "0"
+    creationTimestamp: "2026-11-08T11:22:31Z"
+    generateName: teacher-label-0-
+    labels:
+      batch.kubernetes.io/controller-uid: 3a066e5a-0273-424e-ae25-3a1db74f7131
+      batch.kubernetes.io/job-completion-index: "0"
+      batch.kubernetes.io/job-name: teacher-label
+      controller-uid: 3a066e5a-0273-424e-ae25-3a1db74f7131
+      job: teacher-label
+      job-name: teacher-label
+    name: teacher-label-0-46cqt
+    namespace: pipeline
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: teacher-label
+      uid: 3a066e5a-0273-424e-ae25-3a1db74f7131
+    resourceVersion: "3060"
+    uid: 8c93ce07-2f31-400b-94d3-a6602cb58343
+  spec:
+    containers:
+    - args:
+      - export SHARD_INDEX=$((JOB_COMPLETION_INDEX + SHARD_BASE)); exec python label_worker.py
+      command:
+      - /bin/sh
+      - -c
+      env:
+      - name: SHARD_COUNT
+        value: "4"
+      - name: TEACHER_MODEL
+        value: phi3.5
+      - name: DATASETS_BUCKET
+        value: datasets
+      - name: OLLAMA_HOST
+        value: http://teacher:11434
+      - name: S3_ENDPOINT
+        value: http://seaweedfs.data.svc.cluster.local:8333
+      - name: AWS_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            key: AWS_ACCESS_KEY_ID
+            name: s3-credentials
+      - name: AWS_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            key: AWS_SECRET_ACCESS_KEY
+            name: s3-credentials
+      - name: SHARD_BASE
+        value: "0"
+      - name: JOB_COMPLETION_INDEX
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.labels['batch.kubernetes.io/job-completion-index']
+      image: cloud-mini/worker:v1
+      imagePullPolicy: IfNotPresent
+      name: worker
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 250m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-jpd4n
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: teacher-label-0
+    nodeName: k3d-cloud-mini-agent-0
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-jpd4n
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-08T12:47:58Z"
+      status: "False"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-08T11:22:31Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-08T12:47:57Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-08T12:47:57Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-08T11:22:31Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://2dda8572b060f5ac3fb5fad7232e9b8d634a1b29ae507f75251f1da5baa6ffc7
+      image: docker.io/cloud-mini/worker:v1
+      imageID: sha256:5eacfec39f17e6f08ed4ca0df549071dec6c1944bcbbecf28cb2ef018f0ad61a
+      lastState: {}
+      name: worker
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://2dda8572b060f5ac3fb5fad7232e9b8d634a1b29ae507f75251f1da5baa6ffc7
+          exitCode: 0
+          finishedAt: "2026-11-08T12:47:56Z"
+          reason: Completed
+          startedAt: "2026-11-08T11:22:32Z"
+    hostIP: 172.18.0.3
+    hostIPs:
+    - ip: 172.18.0.3
+    phase: Succeeded
+    podIP: 10.42.0.7
+    podIPs:
+    - ip: 10.42.0.7
+    qosClass: Burstable
+    startTime: "2026-11-08T11:22:31Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      batch.kubernetes.io/job-completion-index: "1"
+    creationTimestamp: "2026-11-08T11:22:31Z"
+    generateName: teacher-label-1-
+    labels:
+      batch.kubernetes.io/controller-uid: 3a066e5a-0273-424e-ae25-3a1db74f7131
+      batch.kubernetes.io/job-completion-index: "1"
+      batch.kubernetes.io/job-name: teacher-label
+      controller-uid: 3a066e5a-0273-424e-ae25-3a1db74f7131
+      job: teacher-label
+      job-name: teacher-label
+    name: teacher-label-1-n77vs
+    namespace: pipeline
+    ownerReferences:
+    - apiVersion: batch/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Job
+      name: teacher-label
+      uid: 3a066e5a-0273-424e-ae25-3a1db74f7131
+    resourceVersion: "3057"
+    uid: cc6f6b8f-15ff-4921-afa9-3364e9205ebb
+  spec:
+    containers:
+    - args:
+      - export SHARD_INDEX=$((JOB_COMPLETION_INDEX + SHARD_BASE)); exec python label_worker.py
+      command:
+      - /bin/sh
+      - -c
+      env:
+      - name: SHARD_COUNT
+        value: "4"
+      - name: TEACHER_MODEL
+        value: phi3.5
+      - name: DATASETS_BUCKET
+        value: datasets
+      - name: OLLAMA_HOST
+        value: http://teacher:11434
+      - name: S3_ENDPOINT
+        value: http://seaweedfs.data.svc.cluster.local:8333
+      - name: AWS_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            key: AWS_ACCESS_KEY_ID
+            name: s3-credentials
+      - name: AWS_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            key: AWS_SECRET_ACCESS_KEY
+            name: s3-credentials
+      - name: SHARD_BASE
+        value: "0"
+      - name: JOB_COMPLETION_INDEX
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.labels['batch.kubernetes.io/job-completion-index']
+      image: cloud-mini/worker:v1
+      imagePullPolicy: IfNotPresent
+      name: worker
+      resources:
+        limits:
+          cpu: "1"
+          memory: 512Mi
+        requests:
+          cpu: 250m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-fkp8d
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: teacher-label-1
+    nodeName: k3d-cloud-mini-server-0
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Never
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+      tolerationSeconds: 300
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+      tolerationSeconds: 300
+    volumes:
+    - name: kube-api-access-fkp8d
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-08T12:47:57Z"
+      status: "False"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-08T11:22:31Z"
+      reason: PodCompleted
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-08T12:47:56Z"
+      reason: PodCompleted
+      status: "False"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-08T12:47:56Z"
+      reason: PodCompleted
+      status: "False"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2026-11-08T11:22:31Z"
+      status: "True"
+      type: PodScheduled
+    containerStatuses:
+    - containerID: containerd://1a769126b4cea027d9766f6f3f152d8e58543de76b9f96e7ab8f438b726dce72
+      image: docker.io/cloud-mini/worker:v1
+      imageID: sha256:5eacfec39f17e6f08ed4ca0df549071dec6c1944bcbbecf28cb2ef018f0ad61a
+      lastState: {}
+      name: worker
+      ready: false
+      restartCount: 0
+      started: false
+      state:
+        terminated:
+          containerID: containerd://1a769126b4cea027d9766f6f3f152d8e58543de76b9f96e7ab8f438b726dce72
+          exitCode: 0
+          finishedAt: "2026-11-08T12:47:55Z"
+          reason: Completed
+          startedAt: "2026-11-08T11:22:31Z"
+    hostIP: 172.18.0.2
+    hostIPs:
+    - ip: 172.18.0.2
+    phase: Succeeded
+    podIP: 10.42.1.7
+    podIPs:
+    - ip: 10.42.1.7
+    qosClass: Burstable
+    startTime: "2026-11-08T11:22:31Z"
+kind: List
+metadata:
+  resourceVersion: ""

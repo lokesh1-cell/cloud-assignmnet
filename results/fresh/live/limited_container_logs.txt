@@ -1,0 +1,68 @@
+INFO:     127.0.0.1:53188 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+INFO:     127.0.0.1:53194 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+downloading model from s3://models/v1
+downloaded s3://models/v1/config.json
+downloaded s3://models/v1/files.sha256
+downloaded s3://models/v1/generation_config.json
+INFO:     127.0.0.1:53204 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+INFO:     127.0.0.1:53220 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+downloaded s3://models/v1/model.safetensors
+downloaded s3://models/v1/model.sha256
+downloaded s3://models/v1/special_tokens_map.json
+downloaded s3://models/v1/tokenizer.json
+downloaded s3://models/v1/tokenizer_config.json
+downloaded s3://models/v1/version_info.json
+model download complete: 9 objects
+INFO:     127.0.0.1:53234 - "GET /readyz HTTP/1.1" 503 Service Unavailable
+model loaded (version v1)
+INFO:     127.0.0.1:53248 - "GET /readyz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53262 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53276 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53280 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53288 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53300 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53310 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53316 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53318 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53320 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53328 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53340 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51232 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51248 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51254 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51262 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51276 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51282 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51290 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51304 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51310 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51322 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51338 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51344 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51358 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51364 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51368 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51370 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51382 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51390 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51404 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51406 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51410 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51414 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51422 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51430 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51436 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51444 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47778 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47790 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47800 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47808 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47814 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47828 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47832 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47848 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47856 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47862 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47870 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47882 - "POST /parse HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47886 - "POST /parse HTTP/1.1" 200 OK
