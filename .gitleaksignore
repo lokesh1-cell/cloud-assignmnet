@@ -1,0 +1,10 @@
+# Reviewed false positives only: six tokenizer file SHA-256 entries and the public
+# CPython base-image GPG signing-key fingerprint. Exact historical finding IDs;
+# no whole files, directories, rules, or future findings are excluded.
+0db7dcba3b73967bbf49a9836896de3d99b3e5bd:results/fresh/local_model_verification.json:generic-api-key:8
+0db7dcba3b73967bbf49a9836896de3d99b3e5bd:results/fresh/local_model_verification.json:generic-api-key:9
+0db7dcba3b73967bbf49a9836896de3d99b3e5bd:results/fresh/local_model_verification.json:generic-api-key:10
+0db7dcba3b73967bbf49a9836896de3d99b3e5bd:results/fresh/local_model_verification.json:generic-api-key:56
+0db7dcba3b73967bbf49a9836896de3d99b3e5bd:results/fresh/local_model_verification.json:generic-api-key:57
+0db7dcba3b73967bbf49a9836896de3d99b3e5bd:results/fresh/local_model_verification.json:generic-api-key:58
+0db7dcba3b73967bbf49a9836896de3d99b3e5bd:results/fresh/live/image_history.txt:generic-api-key:16

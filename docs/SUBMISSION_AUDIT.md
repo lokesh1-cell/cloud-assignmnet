@@ -14,7 +14,7 @@ All seven technical tasks now have newly generated execution evidence. The remai
 | 3 | Fresh image 1,267,334,183 bytes, no weights. 50/50 requests with 1 CPU/1 GiB, OOM false, cgroup peak 793,964,544 bytes. Live fault request exact HTTP 500 body. Runtime dependencies frozen; immutable base image. |
 | 4 | Ingress, probes and no-endpoints-while-loading observed. HPA 1->2->1. Cold cohorts 9/8/9 seconds (median 9). Rollout 1/548 failures=0.1825%; rollback header v1. Recovery 0/354 failures, restored in 7.42 seconds. Final balancing 180/176 (each >=30%). |
 | 5 | Minimal contiguous /22,/24,/25,/27 allocation; NACL checker passes 6/6 public packets. |
-| 6 | Fresh-clone make up and make down succeeded. 30 tests/lint pass. Both release-model CI runs pass. Actual base-model bad gate fails at 0% validity. Gitleaks reports zero findings. AI use disclosed. |
+| 6 | Fresh-clone make up and make down succeeded. 30 tests/lint pass. Both release-model CI runs pass. Actual base-model bad gate fails at 0% validity. Gitleaks reports zero unsuppressed findings; seven inspected checksum/public-GPG false positives have exact historical fingerprint exceptions. AI use disclosed. |
 | 7 | Required two-minute four-user load: CSV p50 1200ms, p95 2500ms, 2.942516rps, 0/353 failures. Per-Pod resource samples retained. Hypothetical cost 0.74577 INR/1000 requests. 99% SLO budget=3.53 failures (3 whole), zero used. Six review rows in report. |
 
 ## Execution links
