@@ -34,7 +34,8 @@ jobs:
           docker run --rm --entrypoint python cloud-mini/worker:v1 -m pip freeze > worker/requirements.lock.txt
           cp service/requirements.lock.txt results/fresh/service_requirements.lock.txt
           cp worker/requirements.lock.txt results/fresh/worker_requirements.lock.txt
-          base=$(docker image inspect python:3.11-slim --format '{{index .RepoDigests 0}}')
+          base_ref=$(sed -n 's/^FROM //p' service/Dockerfile)
+          base=$(docker image inspect "$base_ref" --format '{{index .RepoDigests 0}}')
           sed -i "s|^FROM python:3.11-slim$|FROM $base|" service/Dockerfile worker/Dockerfile
           cp service/Dockerfile results/fresh/service.Dockerfile
           cp worker/Dockerfile results/fresh/worker.Dockerfile

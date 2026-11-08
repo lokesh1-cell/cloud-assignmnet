@@ -1,0 +1,34 @@
+name: Build and lock CPU images
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Build both weight-free images
+        run: |
+          mkdir -p results/image_build
+          docker build -f service/Dockerfile -t cloud-mini/service:v1 . 2>&1 | tee results/image_build/service_build.txt
+          docker build -f worker/Dockerfile -t cloud-mini/worker:v1 . 2>&1 | tee results/image_build/worker_build.txt
+          docker run --rm --entrypoint python cloud-mini/service:v1 -m pip freeze > results/image_build/service_requirements.lock.txt
+          docker run --rm --entrypoint python cloud-mini/worker:v1 -m pip freeze > results/image_build/worker_requirements.lock.txt
+          docker image inspect python:3.11-slim --format '{{index .RepoDigests 0}}' > results/image_build/python_base_digest.txt
+          docker image inspect cloud-mini/service:v1 --format '{{.Size}}' > results/image_build/service_size_bytes.txt
+          docker run --rm --entrypoint find cloud-mini/service:v1 /app -maxdepth 3 -type f > results/image_build/app_files.txt
+          python - <<'PY'
+          from pathlib import Path
+          size=int(Path('results/image_build/service_size_bytes.txt').read_text())
+          assert size <= 2_000_000_000, size
+          files=Path('results/image_build/app_files.txt').read_text().splitlines()
+          assert not any(p.endswith(('.safetensors','.bin','.pt','.pth')) for p in files)
+          print(f'Weight-free service image: {size} bytes')
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: cpu-image-locks-${{ github.run_id }}
+          path: results/image_build/
