@@ -13,6 +13,7 @@ import storage
 pool = [json.loads(line) for line in Path("data/commands_pool.jsonl").read_text().splitlines()]
 shard_count = int(os.environ.get("SHARD_COUNT", "4"))
 expected = {row["id"]: i % shard_count for i, row in enumerate(pool)}
+pool_by_id = {row["id"]: row["text"] for row in pool}
 actual = collections.Counter()
 for shard in range(shard_count):
     key = f"teacher/shard-{shard}.jsonl"
@@ -23,6 +24,7 @@ for shard in range(shard_count):
     rows = [json.loads(line) for line in text.splitlines() if line.strip()]
     for row in rows:
         assert expected[row["id"]] == shard, row["id"]
+        assert row["text"] == pool_by_id[row["id"]], row["id"]
         actual[row["id"]] += 1
 assert actual == collections.Counter(row["id"] for row in pool), "Missing or repeated command ID"
 for key in ("v1/train.jsonl", "v1/train.sha256"):

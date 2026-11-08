@@ -56,12 +56,14 @@ def classify(rec):
         return "b"
     if not isinstance(obj.get("intent"), str) or obj["intent"] not in INTENTS:
         return "c"
-    text = norm(rec.get("text", ""))
+    text = rec.get("text", "")
+    if not isinstance(text, str):
+        return "d"
     for k in ("date", "time", "place"):
         v = obj[k]
         if v is None:
             continue
-        if not isinstance(v, str) or norm(v) not in text:
+        if not isinstance(v, str) or not v or v not in text:
             return "d"
     return ("keep", obj)
 

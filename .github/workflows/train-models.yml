@@ -1,0 +1,105 @@
+name: Clean verified teacher shards and train models
+on:
+  workflow_dispatch:
+    inputs:
+      labels_run_id:
+        description: Completed regeneration run containing the two teacher-part artifacts
+        required: true
+        type: string
+        default: '42475264293'
+permissions:
+  contents: write
+  actions: read
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SHARD_COUNT: '4'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.labels_run_id }}
+          pattern: teacher-part-${{ inputs.labels_run_id }}-*
+          merge-multiple: true
+      - name: Clean unmodified teacher replies and verify every command
+        run: |
+          python -m pip install -r worker/requirements.txt
+          bash scripts/ci/prepare_cluster.sh
+          set -a; source .env; set +a
+          export S3_ENDPOINT=http://localhost:8333
+          python scripts/ci/restore_checkpoint.py
+          python worker/clean.py --counts-out results/fresh/clean_counts.json | tee results/fresh/cleaning.txt
+          python scripts/ci/export_data.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: teacher-data-${{ github.run_id }}
+          path: |
+            datasets/
+            results/fresh/
+          retention-days: 30
+      - name: Remove cluster
+        if: always()
+        run: k3d cluster delete cloud-mini || true
+  train:
+    needs: data
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: teacher-data-${{ github.run_id }}
+      - name: Install CPU training tools
+        run: |
+          python -m pip install torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r training/requirements.txt
+      - name: Smoke train then train both versions
+        env:
+          OMP_NUM_THREADS: '2'
+          MKL_NUM_THREADS: '2'
+        run: |
+          mkdir -p results/fresh
+          python training/train.py --version smoke --subset 50 --no-upload | tee results/fresh/train_smoke.txt
+          python training/train.py --version v1 --no-upload | tee results/fresh/train_v1.txt
+          cp training/loss.csv results/fresh/loss_v1.csv
+          python training/train.py --version v2 --seed 7 --no-upload | tee results/fresh/train_v2.txt
+          cp training/loss.csv results/fresh/loss_v2.csv
+          python -m pip freeze > results/fresh/training_environment.txt
+      - name: Evaluate exact trained models and base
+        env:
+          OMP_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: |
+          for version in v1 v2; do
+            python training/predict.py --model models/$version --input data/validation.jsonl --out results/fresh/pred_student_$version.jsonl
+            python tools/score.py results/fresh/pred_student_$version.jsonl data/validation.jsonl --out results/fresh/score_student_$version.json
+          done
+          python training/predict.py --model EleutherAI/pythia-70m --input data/validation.jsonl --out results/fresh/pred_base.jsonl
+          python tools/score.py results/fresh/pred_base.jsonl data/validation.jsonl --out results/fresh/score_base.json
+      - name: Publish versioned model and dataset assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp models/v1/model.sha256 models/model.sha256
+          cp models/v2/model.sha256 models/model-v2.sha256
+          tar -czf /tmp/teacher-data.tar.gz datasets results/fresh
+          gh release view model-v1 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+            gh release create model-v1 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title 'Versioned command parser models' --notes 'CPU models trained on phi3.5 generated labels. Dataset and execution evidence included; no validation labels used for training.'
+          gh release upload model-v1 --repo "$GITHUB_REPOSITORY" models/v1.tar.gz models/v2.tar.gz models/model.sha256 models/model-v2.sha256 /tmp/teacher-data.tar.gz --clobber
+      - name: Preserve training and evaluation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: trained-evidence-${{ github.run_id }}
+          path: results/fresh/
+          retention-days: 30

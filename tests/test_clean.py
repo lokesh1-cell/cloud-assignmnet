@@ -101,3 +101,13 @@ def test_non_string_intent_is_rejected_without_crashing():
     for intent in ([], {}, None, 7):
         row = rec("X", "weather", {"intent": intent, "date": None, "time": None, "place": None})
         assert clean.classify(row) == "c"
+
+
+def test_slots_must_be_exact_nonempty_spans():
+    for place in ("London", "london ", ""):
+        row = rec(
+            "X",
+            "weather in london",
+            {"intent": "weather_query", "date": None, "time": None, "place": place},
+        )
+        assert clean.classify(row) == "d"

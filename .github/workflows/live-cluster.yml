@@ -21,6 +21,8 @@ jobs:
           sudo install /tmp/k3d /usr/local/bin/k3d
           python -m pip install -r worker/requirements.txt locust==2.47.0
           mkdir -p results/fresh
+          lscpu > results/fresh/host_cpu.txt
+          free -m > results/fresh/host_memory.txt
           python - <<'PY'
           import secrets
           from pathlib import Path
@@ -54,6 +56,12 @@ jobs:
             if curl -sf http://localhost:8333/status >/dev/null; then break; fi
             sleep 1
           done
+      - name: Verify restored datasets and both model versions in object storage
+        run: |
+          set -a; source .env; set +a
+          export S3_ENDPOINT=http://localhost:8333
+          python scripts/ci/export_data.py | tee results/fresh/restored_dataset.txt
+          python scripts/ci/verify_storage.py
       - name: Run actual constrained-container and cluster measurements
         run: python scripts/ci/live_checks.py
       - name: Record cluster diagnostics
