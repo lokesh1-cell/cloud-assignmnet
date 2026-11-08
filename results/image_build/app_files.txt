@@ -1,0 +1,5 @@
+/app/schema.json
+/app/model_runner.py
+/app/app.py
+/app/requirements.txt
+/app/requirements.lock.txt
