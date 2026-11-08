@@ -1,0 +1,31 @@
+# Credentials and machine-specific settings
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+
+# Python and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Generated data and model weights: publish model archives as Release assets
+/datasets/
+/models/
+*.safetensors
+pytorch_model*.bin
+*.pt
+*.pth
+*.ckpt
+*.tar.gz
+
+# Local cluster and PDF build intermediates
+.kube/
+*.aux
+*.log
+*.out
+*.toc
+.DS_Store

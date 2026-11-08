@@ -1,0 +1,15 @@
+.git
+.github
+.env
+.env.*
+.venv
+venv
+**/__pycache__
+**/*.pyc
+.pytest_cache
+models
+datasets
+results
+report
+docs
+*.zip
