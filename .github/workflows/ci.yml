@@ -11,6 +11,11 @@ on:
         type: choice
         options: [release, untrained]
         default: release
+      model_version:
+        description: Trained model version to evaluate
+        type: choice
+        options: [v1, v2]
+        default: v1
 
 permissions:
   contents: read
@@ -22,6 +27,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       MODEL_SOURCE: ${{ inputs.model_source || 'release' }}
+      MODEL_VERSION: ${{ inputs.model_version || 'v1' }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
@@ -38,11 +44,14 @@ jobs:
       - name: Download trained release model
         if: env.MODEL_SOURCE == 'release'
         run: |
-          mkdir -p models/v1
+          mkdir -p "models/$MODEL_VERSION"
+          checksum=model.sha256
+          if [ "$MODEL_VERSION" = v2 ]; then checksum=model-v2.sha256; fi
           gh release download model-v1 --repo "$GITHUB_REPOSITORY" \
-            --pattern v1.tar.gz --pattern model.sha256 --dir models
-          (cd models && sha256sum --check model.sha256)
-          tar -xzf models/v1.tar.gz -C models/v1
+            --pattern "$MODEL_VERSION.tar.gz" --pattern "$checksum" --dir models
+          (cd models && sha256sum --check "$checksum")
+          tar -xzf "models/$MODEL_VERSION.tar.gz" -C "models/$MODEL_VERSION"
+          (cd "models/$MODEL_VERSION" && sha256sum --check files.sha256)
       - name: Install CPU inference dependencies
         run: |
           python -m pip install torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu
@@ -50,7 +59,7 @@ jobs:
       - name: Model evaluation
         run: |
           mkdir -p results
-          model=models/v1
+          model="models/$MODEL_VERSION"
           if [ "$MODEL_SOURCE" = untrained ]; then model=EleutherAI/pythia-70m; fi
           python training/predict.py --model "$model" --input data/validation.jsonl \
             --out results/ci_predictions.jsonl

@@ -14,7 +14,7 @@ import json
 def extract_json(generated):
     """Return the model's JSON object as raw text: from the first '{' to its matching '}'.
 
-    Kept identical to the service's extractor so training-time and serving-time scores line up.
+    Legacy diagnostic helper. Serving and scored predictions preserve unedited decoded text.
     """
     s = generated.strip()
     start = s.find("{")
