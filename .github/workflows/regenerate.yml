@@ -161,7 +161,7 @@ jobs:
           MKL_NUM_THREADS: '2'
         run: |
           mkdir -p results/fresh
-          python training/train.py --version smoke --subset 50 --no-upload | tee results/fresh/train_smoke.txt
+          make train SUBSET=50 | tee results/fresh/train_smoke.txt
           python training/train.py --version v1 --no-upload | tee results/fresh/train_v1.txt
           cp training/loss.csv results/fresh/loss_v1.csv
           python training/train.py --version v2 --seed 7 --no-upload | tee results/fresh/train_v2.txt

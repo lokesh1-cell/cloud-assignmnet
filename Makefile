@@ -28,7 +28,7 @@ build:         ## build and import the service + worker images
 deploy:        ## apply namespaces, secrets, storage and the app
 	bash scripts/deploy.sh
 
-label:         ## run the two labelling workers as an indexed Job (needs Ollama reachable)
+label:         ## run the four labelling workers as an indexed Job (needs Ollama reachable)
 	kubectl apply -f k8s/worker-job.yaml
 	kubectl -n pipeline wait --for=condition=complete job/teacher-label --timeout=6h
 
