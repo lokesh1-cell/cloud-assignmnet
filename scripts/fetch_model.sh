@@ -1,22 +1,32 @@
 #!/usr/bin/env bash
-# Fetch versioned model archives from a GitHub release into models/.
-# Download the model archive(s) from the GitHub Release and extract them to models/<version>/.
-# No-op if models/v1 already exists locally. Lets `make up` work from a fresh clone.
+# Fetch verified release models and the original teacher-generated dataset.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 TAG="${MODEL_RELEASE_TAG:-model-v1}"
 mkdir -p models
 
 fetch() {
-  local v="$1"
-  [ -d "models/$v" ] && return 0
-  if gh release view "$TAG" >/dev/null 2>&1 && gh release download "$TAG" -p "${v}.tar.gz" -D models/ --clobber 2>/dev/null; then
-    mkdir -p "models/$v"
-    tar -xzf "models/${v}.tar.gz" -C "models/$v"
-    echo "fetched models/$v from release $TAG"
-  else
-    echo "note: no models/$v locally and no release asset ${v}.tar.gz (run 'make train' first)"
+  local version="$1"
+  local checksum=model.sha256
+  [ "$version" = v1 ] || checksum=model-v2.sha256
+  if [ -f "models/$version/config.json" ] && [ -f "models/$version/files.sha256" ]; then
+    (cd "models/$version" && sha256sum --check files.sha256)
+    return
   fi
+  gh release download "$TAG" --pattern "${version}.tar.gz" --pattern "$checksum" \
+    --dir models --clobber
+  (cd models && sha256sum --check "$checksum")
+  mkdir -p "models/$version"
+  tar -xzf "models/${version}.tar.gz" -C "models/$version"
+  cp "models/$checksum" "models/$version/model.sha256"
+  (cd "models/$version" && sha256sum --check files.sha256)
+  echo "verified models/$version from release $TAG"
 }
 fetch v1
-fetch v2 || true
+fetch v2
+
+if [ ! -f datasets/v1/train.jsonl ]; then
+  gh release download "$TAG" --pattern teacher-data.tar.gz --dir models --clobber
+  tar -xzf models/teacher-data.tar.gz datasets
+fi
+(cd datasets/v1 && sha256sum --check train.sha256)
