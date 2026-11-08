@@ -35,7 +35,7 @@ jobs:
           cp service/requirements.lock.txt results/fresh/service_requirements.lock.txt
           cp worker/requirements.lock.txt results/fresh/worker_requirements.lock.txt
           base_ref=$(sed -n 's/^FROM //p' service/Dockerfile)
-          base=$(docker image inspect "$base_ref" --format '{{index .RepoDigests 0}}')
+          base="$base_ref"
           sed -i "s|^FROM python:3.11-slim$|FROM $base|" service/Dockerfile worker/Dockerfile
           cp service/Dockerfile results/fresh/service.Dockerfile
           cp worker/Dockerfile results/fresh/worker.Dockerfile

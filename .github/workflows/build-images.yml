@@ -16,7 +16,7 @@ jobs:
           docker build -f worker/Dockerfile -t cloud-mini/worker:v1 . 2>&1 | tee results/image_build/worker_build.txt
           docker run --rm --entrypoint python cloud-mini/service:v1 -m pip freeze > results/image_build/service_requirements.lock.txt
           docker run --rm --entrypoint python cloud-mini/worker:v1 -m pip freeze > results/image_build/worker_requirements.lock.txt
-          docker image inspect python:3.11-slim --format '{{index .RepoDigests 0}}' > results/image_build/python_base_digest.txt
+          sed -n 's/^FROM //p' service/Dockerfile > results/image_build/python_base_digest.txt
           docker image inspect cloud-mini/service:v1 --format '{{.Size}}' > results/image_build/service_size_bytes.txt
           docker run --rm --entrypoint find cloud-mini/service:v1 /app -maxdepth 3 -type f > results/image_build/app_files.txt
           python - <<'PY'

@@ -1,7 +1,7 @@
 # Task 3 inference image: pinned CPU dependencies; weights load at runtime.
 # The default PyTorch wheels bundle CUDA/GPU libraries you do not need; installing the CPU
 # wheel keeps the image well under the 2 GB limit.
-FROM python:3.11-slim
+FROM python:3.11-slim@sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535
 
 WORKDIR /app
 
