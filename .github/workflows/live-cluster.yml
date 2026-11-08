@@ -41,6 +41,11 @@ jobs:
           make build
           kubectl -n app rollout restart deployment/command-parser
           kubectl -n app rollout status deployment/command-parser --timeout=240s
+      - name: Verify image contains source and no model weights
+        run: |
+          docker run --rm --entrypoint find cloud-mini/service:v1 /app -maxdepth 3 -type f > results/fresh/image_app_files.txt
+          docker history --no-trunc cloud-mini/service:v1 > results/fresh/image_history.txt
+          if grep -E '\.(safetensors|bin|pt|pth)$' results/fresh/image_app_files.txt; then exit 1; fi
       - name: Restore host storage tunnel
         run: |
           kubectl -n data port-forward svc/seaweedfs 8333:8333 >/tmp/storage-forward.log 2>&1 &

@@ -29,3 +29,6 @@ pytorch_model*.bin
 *.out
 *.toc
 .DS_Store
+
+# Handwritten scan is packaged separately, not published automatically.
+/230101039.pdf
