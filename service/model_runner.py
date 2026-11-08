@@ -126,7 +126,7 @@ class Runner:
         self.ready = True
 
     def raw_output(self, text):
-        """Return the model's raw candidate JSON text for a command."""
+        """Return generated text unchanged so validation cannot hide malformed output."""
         import torch
 
         prompt = f"Command: {text}\nJSON:"  # no trailing space (must match training)
@@ -140,4 +140,4 @@ class Runner:
             )
         new = gen[0][enc["input_ids"].shape[1] :]
         decoded = self.tokenizer.decode(new, skip_special_tokens=True)
-        return extract_json(decoded)
+        return decoded

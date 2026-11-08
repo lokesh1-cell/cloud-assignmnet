@@ -63,6 +63,8 @@ jobs:
           kubectl get pods -A -o wide > results/fresh/final_pods.txt || true
           kubectl get events -A --sort-by=.metadata.creationTimestamp > results/fresh/cluster_events.txt || true
           kubectl -n app logs -l app=command-parser --tail=100 --prefix=true > results/fresh/final_service_logs.txt || true
+          docker logs limited-parser > results/fresh/limited_container_failure_logs.txt 2>&1 || true
+          docker inspect limited-parser --format '{{json .State}}' > results/fresh/limited_container_final_state.json 2>/dev/null || true
           docker image inspect cloud-mini/service:v1 --format '{{.Size}} {{.Id}}' > results/fresh/image_size.txt || true
       - name: Teardown and verify make down
         if: always()

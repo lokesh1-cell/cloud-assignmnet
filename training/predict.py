@@ -65,7 +65,7 @@ def main():
                 )
             new = gen[0][enc["input_ids"].shape[1] :]
             text = tokenizer.decode(new, skip_special_tokens=True)
-            out.write(json.dumps({"id": r["id"], "prediction": extract_json(text)}) + "\n")
+            out.write(json.dumps({"id": r["id"], "prediction": text}) + "\n")
     print(f"wrote {a.out} ({len(rows)} predictions)")
 
 
