@@ -1,0 +1,5 @@
+Compiled with pdflatex (two passes).
+Pages: 4
+All seven task headings and student identity verified by text extraction.
+Actual failed quality-gate run hyperlink verified in PDF annotations.
+No overfull boxes in the LaTeX log.

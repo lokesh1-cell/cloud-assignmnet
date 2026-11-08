@@ -1,0 +1,196 @@
+{
+  "conclusion": "failure",
+  "jobs": [
+    {
+      "completedAt": "2026-11-08T10:29:04Z",
+      "conclusion": "success",
+      "databaseId": 128703407893,
+      "name": "secret-scan",
+      "startedAt": "2026-11-08T10:28:56Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-08T10:28:58Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-08T10:28:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:28:59Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-11-08T10:28:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:29:00Z",
+          "conclusion": "success",
+          "name": "Install verified Gitleaks binary",
+          "number": 3,
+          "startedAt": "2026-11-08T10:28:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:29:00Z",
+          "conclusion": "success",
+          "name": "Scan repository history",
+          "number": 4,
+          "startedAt": "2026-11-08T10:29:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:29:02Z",
+          "conclusion": "success",
+          "name": "Save secret scan evidence",
+          "number": 5,
+          "startedAt": "2026-11-08T10:29:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:29:02Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 10,
+          "startedAt": "2026-11-08T10:29:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:29:02Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-11-08T10:29:02Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42471592876/job/128703407893"
+    },
+    {
+      "completedAt": "2026-11-08T10:31:25Z",
+      "conclusion": "failure",
+      "databaseId": 128703408043,
+      "name": "validate",
+      "startedAt": "2026-11-08T10:28:57Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-08T10:28:59Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-08T10:28:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:28:59Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 2,
+          "startedAt": "2026-11-08T10:28:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:29:00Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+          "number": 3,
+          "startedAt": "2026-11-08T10:28:59Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:29:06Z",
+          "conclusion": "success",
+          "name": "Install validation tools",
+          "number": 4,
+          "startedAt": "2026-11-08T10:29:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:29:07Z",
+          "conclusion": "success",
+          "name": "Lint",
+          "number": 5,
+          "startedAt": "2026-11-08T10:29:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:29:08Z",
+          "conclusion": "success",
+          "name": "Unit tests",
+          "number": 6,
+          "startedAt": "2026-11-08T10:29:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:29:08Z",
+          "conclusion": "skipped",
+          "name": "Download trained release model",
+          "number": 7,
+          "startedAt": "2026-11-08T10:29:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:29:36Z",
+          "conclusion": "success",
+          "name": "Install CPU inference dependencies",
+          "number": 8,
+          "startedAt": "2026-11-08T10:29:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:31:21Z",
+          "conclusion": "success",
+          "name": "Model evaluation",
+          "number": 9,
+          "startedAt": "2026-11-08T10:29:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:31:21Z",
+          "conclusion": "failure",
+          "name": "Quality gate (minimum 95 percent valid JSON)",
+          "number": 10,
+          "startedAt": "2026-11-08T10:31:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:31:23Z",
+          "conclusion": "success",
+          "name": "Save evaluation evidence",
+          "number": 11,
+          "startedAt": "2026-11-08T10:31:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:31:23Z",
+          "conclusion": "skipped",
+          "name": "Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+          "number": 21,
+          "startedAt": "2026-11-08T10:31:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:31:23Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "number": 22,
+          "startedAt": "2026-11-08T10:31:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-08T10:31:23Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-11-08T10:31:23Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42471592876/job/128703408043"
+    }
+  ],
+  "url": "https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42471592876"
+}

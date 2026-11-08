@@ -1,0 +1,102 @@
+{
+  "audit_date": "2026-11-08",
+  "student": {
+    "name": "Lokesh Yadav",
+    "roll": "230101039"
+  },
+  "starter_kit": {
+    "data/commands_pool.jsonl": {
+      "matches_starter": true,
+      "sha256": "3470398860500fabcf360debda8fb0e7a8a6ef9f552bc0341b5f3648e335f29a",
+      "comparison": "bytes"
+    },
+    "data/rate_card.json": {
+      "matches_starter": true,
+      "sha256": "3bbdf210586dee2f803bdd154f6cad7630825922b8fcf489bfa37300ed731420",
+      "comparison": "bytes"
+    },
+    "data/schema.json": {
+      "matches_starter": true,
+      "sha256": "8c47a05b3f6e0e3a4feaae2cafa570fa2976c4bb974e7f4af2f1e4433d65a656",
+      "comparison": "bytes"
+    },
+    "data/validation.jsonl": {
+      "matches_starter": true,
+      "sha256": "707739170f96f103cbcc41485f92cc4ddf4af903c3939ff717d1f8ccb884bd11",
+      "comparison": "bytes"
+    },
+    "network/packets_sample.jsonl": {
+      "matches_starter": true,
+      "sha256": "487064de091561ada281de311fd16ed63c1fea3e5422e946377399549ead8e15",
+      "comparison": "bytes"
+    },
+    "tools/locustfile.py": {
+      "matches_starter": true,
+      "sha256": "034ad5f32dbc848a57f8f5c916f0a747cc85b04345f51bea4b87ecd05660de0e",
+      "comparison": "python_ast"
+    },
+    "tools/nacl_sim.py": {
+      "matches_starter": true,
+      "sha256": "2ab961e64b7af4f722935ee76d80d7a973bee4266e46618cdc83ef653aaab4ad",
+      "comparison": "python_ast"
+    },
+    "tools/score.py": {
+      "matches_starter": true,
+      "sha256": "f7824cb09bdf61a774cb5919feda2475e44710707a54732407f875fdcd80c977",
+      "comparison": "python_ast"
+    }
+  },
+  "saved_scores": {
+    "teacher": {
+      "json_validity": 100.0,
+      "intent_accuracy": 85.0,
+      "date_accuracy": 80.0,
+      "time_accuracy": 88.0,
+      "place_accuracy": 85.0,
+      "full_frame": 48.0,
+      "examples": 100,
+      "missing_predictions": 0
+    },
+    "base": {
+      "json_validity": 0.0,
+      "intent_accuracy": 0.0,
+      "date_accuracy": 0.0,
+      "time_accuracy": 0.0,
+      "place_accuracy": 0.0,
+      "full_frame": 0.0,
+      "examples": 100,
+      "missing_predictions": 0
+    },
+    "student_v1": {
+      "json_validity": 99.0,
+      "intent_accuracy": 82.0,
+      "date_accuracy": 77.0,
+      "time_accuracy": 85.0,
+      "place_accuracy": 82.0,
+      "full_frame": 43.0,
+      "examples": 100,
+      "missing_predictions": 0
+    },
+    "student_v2": {
+      "json_validity": 97.0,
+      "intent_accuracy": 78.0,
+      "date_accuracy": 71.0,
+      "time_accuracy": 88.0,
+      "place_accuracy": 85.0,
+      "full_frame": 44.0,
+      "examples": 100,
+      "missing_predictions": 0
+    }
+  },
+  "application_python_ast_unchanged": true,
+  "bad_model_ci": "https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42471592876",
+  "normal_release_ci": "https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42471592070",
+  "status": "incomplete",
+  "missing": [
+    "teacher shards",
+    "cleaned training data and checksum",
+    "trained v1/v2 model release",
+    "handwritten reflection",
+    "required live-run evidence"
+  ]
+}

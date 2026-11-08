@@ -1,0 +1,31 @@
+$ /tmp/cloud-review-venv/bin/python -B -m pyflakes worker service training scripts tools
+Exit code: 0
+
+$ python -B tools/nacl_sim.py network/nacl.json network/packets_sample.jsonl --check
+ S01  inbound  tcp port 443   192.0.2.55      -> ALLOW (rule 120)  OK
+ S02  inbound  tcp port 22    192.0.2.55      -> DENY  (no match (default deny))  OK
+ S03  outbound tcp port 8000  10.20.1.1       -> ALLOW (rule 100)  OK
+ S04  inbound  tcp port 443   198.51.100.9    -> DENY  (rule 100)  OK
+ S05  outbound tcp port 60000 192.0.2.55      -> ALLOW (rule 110)  OK
+ S06  inbound  tcp port 5432  10.20.5.20      -> DENY  (no match (default deny))  OK
+
+Correct: 6 / 6 = 100.0%
+Exit code: 0
+
+$ bash -n scripts/create_secrets.sh
+Exit code: 0
+
+$ bash -n scripts/deploy.sh
+Exit code: 0
+
+$ bash -n scripts/evaluate.sh
+Exit code: 0
+
+$ bash -n scripts/fetch_model.sh
+Exit code: 0
+
+$ bash -n scripts/run_workers_local.sh
+Exit code: 0
+
+$ bash -n scripts/up.sh
+Exit code: 0
