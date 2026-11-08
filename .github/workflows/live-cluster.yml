@@ -1,0 +1,71 @@
+name: Live cluster and container verification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Install local-cluster tools
+        run: |
+          curl -fsSL https://github.com/k3d-io/k3d/releases/download/v5.9.0/k3d-linux-amd64 -o /tmp/k3d
+          chmod +x /tmp/k3d
+          sudo install /tmp/k3d /usr/local/bin/k3d
+          python -m pip install -r worker/requirements.txt locust==2.47.0
+          mkdir -p results/fresh
+          python - <<'PY'
+          import secrets
+          from pathlib import Path
+          Path('.env').write_text(Path('.env.example').read_text().replace('change-me-local-dev-secret', secrets.token_hex(24)))
+          PY
+      - name: Fresh-clone make up
+        run: make up 2>&1 | tee results/fresh/make_up.txt
+      - name: Lock every installed image dependency and rebuild
+        run: |
+          docker run --rm --entrypoint python cloud-mini/service:v1 -m pip freeze > service/requirements.lock.txt
+          docker run --rm --entrypoint python cloud-mini/worker:v1 -m pip freeze > worker/requirements.lock.txt
+          cp service/requirements.lock.txt results/fresh/service_requirements.lock.txt
+          cp worker/requirements.lock.txt results/fresh/worker_requirements.lock.txt
+          base=$(docker image inspect python:3.11-slim --format '{{index .RepoDigests 0}}')
+          sed -i "s|^FROM python:3.11-slim$|FROM $base|" service/Dockerfile worker/Dockerfile
+          cp service/Dockerfile results/fresh/service.Dockerfile
+          cp worker/Dockerfile results/fresh/worker.Dockerfile
+          make build
+          kubectl -n app rollout restart deployment/command-parser
+          kubectl -n app rollout status deployment/command-parser --timeout=240s
+      - name: Restore host storage tunnel
+        run: |
+          kubectl -n data port-forward svc/seaweedfs 8333:8333 >/tmp/storage-forward.log 2>&1 &
+          for attempt in $(seq 1 60); do
+            if curl -sf http://localhost:8333/status >/dev/null; then break; fi
+            sleep 1
+          done
+      - name: Run actual constrained-container and cluster measurements
+        run: python scripts/ci/live_checks.py
+      - name: Record cluster diagnostics
+        if: always()
+        run: |
+          mkdir -p results/fresh
+          kubectl get pods -A -o wide > results/fresh/final_pods.txt || true
+          kubectl get events -A --sort-by=.metadata.creationTimestamp > results/fresh/cluster_events.txt || true
+          kubectl -n app logs -l app=command-parser --tail=100 --prefix=true > results/fresh/final_service_logs.txt || true
+          docker image inspect cloud-mini/service:v1 --format '{{.Size}} {{.Id}}' > results/fresh/image_size.txt || true
+      - name: Teardown and verify make down
+        if: always()
+        run: |
+          make down 2>&1 | tee results/fresh/make_down.txt
+          k3d cluster list > results/fresh/clusters_after_teardown.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: live-cluster-${{ github.run_id }}
+          path: results/fresh/
+          retention-days: 30

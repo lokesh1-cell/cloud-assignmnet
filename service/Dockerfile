@@ -8,8 +8,10 @@ WORKDIR /app
 # CPU-only torch first (pinned), from the PyTorch CPU index.
 RUN pip install --no-cache-dir torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu
 
-COPY service/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY service/requirements*.txt ./
+RUN if [ -f requirements.lock.txt ]; then \
+      pip install --no-cache-dir -r requirements.lock.txt; \
+    else pip install --no-cache-dir -r requirements.txt; fi
 
 COPY service/app.py service/model_runner.py ./
 COPY data/schema.json ./schema.json
