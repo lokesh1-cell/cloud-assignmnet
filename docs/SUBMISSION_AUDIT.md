@@ -1,124 +1,40 @@
-# Submission audit — CS3081
+# Submission audit - CS3081
 
 **Name:** Lokesh Yadav  
-**Roll number:** 230101039  
+**Roll:** 230101039  
 **Repository:** https://github.com/lokesh1-cell/cloud-assignmnet.git  
-**Audit date:** 8 November 2026 (Asia/Kolkata)
+**Audit date:** 8 November 2026
 
-## Verdict
+All seven technical tasks now have newly generated execution evidence. The remaining submission input is the student's genuine handwritten reflection PDF (maximum three pages). Hidden 300-command model and 20-packet network tests are unavailable; no hidden-test pass is claimed. See the four-page report for architecture, decisions, limitations and measured results.
 
-**Not fully complete; submitting as-is risks losing substantial marks.** Source
-for all seven tasks is present, the report is compiled, and a working CI quality
-gate has been demonstrated. However, the trained model release and underlying
-training artifacts are missing, and several required live experiments have no
-adequate evidence. A handwritten reflection will be supplied separately by the
-student. No `final` tag is created while these items remain unresolved.
+| Task | Verified evidence |
+| --- | --- |
+| 1 | Two runner groups with two simultaneous pipeline workers each; all four modulo shards cover exactly 3000 IDs. Strict re-clean gives 2848 rows and reproduces SHA-256 `5cda236a5762e5b0d56b0d502be90410e3b321205f5007b18c7154d453823f40`. Counts sum to 3000. |
+| 2 | 50-row make smoke run and two real CPU-trained 1500-example models. v1/v2 are distinct; seven files per model and release archives verified, including streaming S3 hashes. Teacher/base/v1/v2 validity 100/0/100/99%; full frame 49/0/41/42%. Raw outputs retained. |
+| 3 | Fresh image 1,267,334,183 bytes, no weights. 50/50 requests with 1 CPU/1 GiB, OOM false, cgroup peak 793,964,544 bytes. Live fault request exact HTTP 500 body. Runtime dependencies frozen; immutable base image. |
+| 4 | Ingress, probes and no-endpoints-while-loading observed. HPA 1->2->1. Cold cohorts 9/8/9 seconds (median 9). Rollout 1/548 failures=0.1825%; rollback header v1. Recovery 0/354 failures, restored in 7.42 seconds. Final balancing 180/176 (each >=30%). |
+| 5 | Minimal contiguous /22,/24,/25,/27 allocation; NACL checker passes 6/6 public packets. |
+| 6 | Fresh-clone make up and make down succeeded. 30 tests/lint pass. Both release-model CI runs pass. Actual base-model bad gate fails at 0% validity. Gitleaks reports zero findings. AI use disclosed. |
+| 7 | Required two-minute four-user load: CSV p50 1200ms, p95 2500ms, 2.942516rps, 0/353 failures. Per-Pod resource samples retained. Hypothetical cost 0.74577 INR/1000 requests. 99% SLO budget=3.53 failures (3 whole), zero used. Six review rows in report. |
 
-This audit uses the supplied assignment PDF and starter ZIP, plus the Classroom
-screenshot. The screenshot requires one ZIP named `230101039.zip` containing the
-report, handwritten reflection, final source tree, results, and main README. The
-stated deadline is **9 November, 11:00 AM**. The reflection must be named
-`230101039.pdf`, at most three pages; the technical report must be at
-`report/report.pdf`, at most eight pages excluding references/appendices.
+## Execution links
 
-## Task-by-task assessment
+- Teacher label jobs and teacher evaluation: https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42475264293 (parent deliberately cancelled after completed label/evaluation jobs to use corrected downstream cleaner/trainer).
+- Successful aggregation/smoke/full training: https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42482536228
+- Model/tokenizer/data assets: https://github.com/lokesh1-cell/cloud-assignmnet/releases/tag/model-v1
+- Passing v1 CI: https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42493781600
+- Passing v2 CI: https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42493785783
+- Deliberate bad-model quality gate: https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42475597603
+- Actual live cluster/container checks: https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42493789838
 
-| Task | What is present or verified | Still needed |
-| --- | --- | --- |
-| 1 — Storage/labelling | k3d and SeaweedFS definitions; bucket initializer; two-worker indexed Job; prompt; cleaning code; counts sum to 3000; cleaning tests pass | Original raw shards, exact-once ID coverage, actual two-worker `pipeline` execution, bucket evidence, cleaned dataset and reproducible SHA-256 |
-| 2 — Training | Required model/config and 1500-row cap; CPU training code; v1/v2 paths; saved prediction files reproduce all four score reports | Actual v1/v2 model and tokenizer files, release assets and matching checksums, object-storage evidence, smoke training run from the real cleaned data |
-| 3 — Service | Endpoints, headers, readiness and fault-injection unit tests pass; CPU Dockerfile excludes weights | Fresh image build; 50 sequential real-model requests at 1 CPU/1 GiB; continuous peak-memory/OOM evidence; complete dependency locking |
-| 4 — Reliability | Manifests match replica/resource/probe/HPA settings; saved balancing split meets 30% per pod | Rollout below 0.5% failures; recorded v1 header after rollback; recovery under load with at most 2% failures; HPA 1→2→1; creation-to-Ready timing and explicit S3-download logs; no-ready-endpoints evidence |
-| 5 — Network | Four subnet calculations pass; starter simulator checks 6/6 sample packets; explanations and rules present | Hidden assessment cannot be verified locally; this is conceptual subnet/NACL configuration, not actual enforcement by k3d |
-| 6 — CI/reproducibility | Workflow added; lint and 22 tests pass; actual untrained model fails the 95% gate; Gitleaks passes | Publish the trained release and pass release-model evaluation; reproduce `make up` on a fresh setup; tag complete submission `final` |
-| 7 — Performance/cost | Saved latency/resource/cost outputs; arithmetic reviewed; SLO corrected in report | Rerun the standard two-minute test, reconcile counts/headers/CSV, capture synchronized pod resources and required reliability measurements |
+## Evidence qualifications
 
-## Verified checks
+The Locust CSV is its last periodic snapshot, before graceful shutdown drained in-flight work. Standard CSV totals are 353 with zero failures and p50 1200ms; the final console/header totals are 356 with zero failures and p50 1400ms. Both p95 values are 2500ms. Per-replica balancing uses only the matching final headers (180+176). Cost and SLO use the CSV snapshot explicitly. The original logs/CSVs have not been rewritten to force matching totals.
 
-- All provided data files and sample packets are byte-identical to the starter ZIP.
-- All three provided Python checking tools retain the starter kit's Python ASTs.
-- Recomputed teacher/base/student-v1/student-v2 scores match all saved reports.
-- Student v1: JSON validity 99%, full frame 43%; teacher full frame 48% on the
-  supplied validation set. These are checks of saved predictions, not unavailable
-  model weights or hidden-test performance.
-- Existing suite: **22 passed**; lint passes; all shell scripts pass `bash -n`.
-- Network simulator: **6/6** sample packets correct.
-- Gitleaks 8.30.1: no findings in the working tree or the task commit history.
-- Application Python ASTs match the pre-audit source. No app/training logic was
-  changed to improve reported scores.
-- Compiled report: four pages, with one section per task; visually checked.
+`kubectl top` is sampled, not a continuous peak. The constrained container's cgroup `memory.peak` separately measures peak memory. The final cleanup diagnostic reports no limited-parser container because that successfully tested container had already been removed; its earlier valid inspection, request log and cgroup evidence are canonical. All raw diagnostics remain preserved.
 
-Current evidence is under `results/submission_audit/`. Its test run uses the
-local Python 3.12 environment; GitHub CI independently runs all 22 tests on the
-required Python 3.11. Historical cluster logs elsewhere in `results/` were not
-regenerated by this audit.
+Earlier supplied scores and incomplete reliability logs are in `results/historical/`; they are superseded, not merged into current measurements. Correctness fixes preserve the intended pipeline: exact unedited teacher/model text, type-safe intents, exact nonempty spans, secure/paginated storage downloads, retries, CPU thread limits and graceful shutdown. Teacher data, models and live tests were regenerated because the original weights/shards were absent.
 
-## GitHub Actions evidence
+## Submission finishing step
 
-- [Deliberate bad-model quality-gate failure](https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42471592876):
-  the workflow downloaded the untrained `EleutherAI/pythia-70m`, performed actual
-  inference on all 100 validation commands, and failed specifically at
-  `score.py --min-validity 95` with 0% JSON validity. Lint, unit tests, model
-  inference, and secret scan passed. Predictions and score report were downloaded
-  to `results/submission_audit/ci_bad_model/`.
-- [Release-model pipeline](https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42471592070):
-  lint/tests and secret scan pass; model download fails with `release not found`.
-  This is an outstanding artifact problem, not a quality-gate demonstration.
-
-Earlier bootstrap runs were triggered before the Task 7 cost module was pushed;
-they failed during test collection. They are superseded by the complete-code runs
-above and are not used as quality-gate evidence.
-
-## Important discrepancies and code-review findings
-
-1. **Missing artifacts.** There is no `models/`, `datasets/`, or trained model
-   release in the target repository. Raw teacher shards and training checksums
-   cannot be reconstructed from score reports. Recover them from the machine or
-   storage where training ran. Otherwise regenerate labels and retrain; do not
-   substitute validation labels or another person's weights.
-2. **Raw response preservation.** `worker/label_worker.py` calls `.strip()` on the
-   teacher response. This can remove whitespace from the exact generated string.
-   Review this against the requirement to preserve replies unedited.
-3. **Malformed intent types.** `service/model_runner.py` and `worker/clean.py`
-   check membership in a set before checking that `intent` is text. An array or
-   object used as the intent can raise `TypeError` rather than follow the intended
-   invalid-output/rejection path. The current tests do not cover this edge case.
-4. **Load duration and totals.** The console says 90 seconds, not two minutes.
-   Its final total is 215 with two failures and 213 successful response headers.
-   The CSV instead totals 213 requests with two failures. Neither file is edited;
-   the report distinguishes the snapshots and calls for a new synchronized run.
-5. **Rollout is above target.** Two failed requests out of 39 = 5.13%, above 0.5%.
-   A zero-unavailable rollout policy does not prove that the observed failures can
-   be excluded. No saved rollback header proves v1 was restored.
-6. **HPA/recovery/cold-start evidence is partial.** A scale-limited HPA snapshot
-   is not a 1→2→1 demonstration. The recovery log has no load-test failure rate.
-   Startup logs say `model loaded` but do not explicitly show the object download;
-   timer origin is not demonstrated as Pod creation.
-7. **Memory evidence is a snapshot.** `kubectl top` records 452/475 MiB, not a peak
-   over 50 sequential limited-container requests. The report no longer calls it
-   a measured peak or proof that this required test passed.
-8. **Loss versions.** `training/loss.csv` contains the v2 run's values. Separate
-   v1/v2 loss records exist under `results/`; identify the version when reporting.
-9. **Dependency pins.** Explicit Python requirements are pinned, but transitive
-   dependencies and base images are not fully locked. The strict reproducible
-   dependency requirement needs a complete verified lock/build record.
-
-The earlier report claimed a successful `live-cluster` workflow and a green
-trained-model CI pipeline without a corresponding run in this repository. Those
-claims have been removed. Supplied historical measurements are clearly labeled.
-
-## Finish before submission
-
-1. Recover the original raw/cleaned dataset and both trained model versions, or
-   regenerate them from the required teacher and first 1500 cleaned records.
-2. Verify and publish release `model-v1` with `v1.tar.gz`, `v2.tar.gz`, model and
-   tokenizer/version metadata, and checksums. CI expects the v1 checksum asset
-   named `model.sha256`, referring to `v1.tar.gz`. Check it matches the checksum
-   stored with the v1 model. Keep weights outside Git.
-3. Rerun the normal CI release path and obtain a successful run.
-4. Resolve the exact-response and malformed-intent findings, then reproduce the
-   required container, two-minute load, rollback, recovery, HPA, and cold-start
-   tests. Preserve the actual logs and update both report sources consistently.
-5. Supply the handwritten scan as `230101039.pdf` (maximum three pages).
-6. Recompile the report, verify it is at most eight pages, assemble
-   `230101039.zip`, and tag/push the complete submission commit as `final`.
+The technical report is `report/report.pdf` (four pages). Place the student's real handwritten scan at `230101039.pdf` (at most three pages), then run `python scripts/package_submission.py`. The required final ZIP is `230101039.zip`, containing report, reflection, final sources, results, datasets and README. The technical commit is tagged `final`. A `230101039-technical.zip` interim archive intentionally excludes the unavailable scan and is not the complete Classroom submission. The stated deadline is 9 November, 11 AM.

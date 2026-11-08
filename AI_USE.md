@@ -1,59 +1,17 @@
-# AI Use
+# AI use and verification
 
 **Name:** Lokesh Yadav  
-**Roll number:** 230101039  
-**GitHub:** [lokesh1-cell/cloud-assignmnet](https://github.com/lokesh1-cell/cloud-assignmnet.git)
+**Roll:** 230101039  
+**GitHub:** https://github.com/lokesh1-cell/cloud-assignmnet.git
 
-This project was built with AI assistance, as the handout permits ("You'll be using AI and no
-one can stop you. But do use it with your eyes wide open."). This file records what was used,
-for what, and how the output was checked. The historical statements below came with the project; this revision does not independently verify those runs.
+OpenAI Codex assisted with reviewing the supplied project against the assignment, personalising documentation, restructuring the README/report, repository setup and task commits, correctness fixes, regression tests, dependency locks, GitHub Actions workflows, release publication and execution orchestration. Codex also analysed the actual resulting artifacts and compiled/visually checked the report. These executions were performed by the assistant using the student's repository and free GitHub runner resources; this document does not claim the student manually ran every command.
 
-## Tools used
-- **An AI coding assistant (Claude / Claude Code)** — to scaffold the repository, write the
-  Python code, Dockerfiles, Kubernetes manifests, the NACL and subnet plan, the CI workflow,
-  and the first drafts of the report and README.
-- **Ollama + phi3.5** — the *fixed teacher model* required by the handout (not a coding aid):
-  used to label the command pool. Temperature 0, seed 42.
+The initially supplied project included a statement attributing scaffolding to Claude/Claude Code. That earlier development history cannot be independently verified here. Its old measurements remain under `results/historical/` and are not evidence for the regenerated models or new live tests.
 
-## What AI was used for
-| Area | AI's role | My role |
-|------|-----------|---------|
-| Teacher prompt (`prompts/teacher_prompt.txt`) | drafted the instructions + few-shot examples | reviewed against the Section 4 slot rules; ran it and spot-checked replies |
-| Worker + `clean.py` (Task 1) | wrote the sharding and cleaning logic | ran it, checked the counts add up, confirmed the checksum is stable |
-| Training / eval scripts (Task 2) | wrote `train.py`, `predict.py` | ran training on CPU, read `loss.csv`, scored all three models |
-| Service + Dockerfile (Task 3) | wrote the FastAPI app and image | tested the three endpoints, the headers, `FAULT_INJECT`, and the image size |
-| K8s manifests (Task 4) | wrote Deployment/Service/Ingress/HPA | applied them, tested rollout/rollback/recovery/cold-start myself |
-| NACL + subnets (Task 5) | wrote `nacl.json` and the subnet table | **verified with `nacl_sim.py` (6/6 on the sample packets)** and re-did the subnet maths by hand |
-| CI + Makefile (Task 6) | wrote `ci.yml`, `Makefile`, helper scripts | ran the pipeline, including the deliberately-failing gate run |
-| Report / README | drafted structure and prose | replaced every number with my own measured result |
+Ollama with the assignment's fixed `phi3.5` teacher generated all new training labels at temperature 0, seed 42. It is part of the required machine-learning pipeline. No Codex-generated labels, manually corrected labels, other students' models, or validation labels were substituted for teacher training replies.
 
-## How I checked what the AI gave me
-- **Ran everything.** No result in the report is copied from the AI; every measured number
-  (scores, latency, memory, cold-start, cost) comes from my own run and the files in `results/`.
-- **Used the provided checkers.** `nacl_sim.py` for the NACL, `score.py` for model quality,
-  the Locust file for load. These are ground truth, not the AI's claims.
-- **Unit tests.** `tests/` covers `clean.py`, the output validation, and the subnet maths; they
-  run in CI.
-- **Read the code.** I can explain every file; where I changed the AI's output I noted why.
+Verification included exact 3000-ID shard coverage; byte-for-byte strict-cleaner reproduction and checksum; first-1500 training lineage; actual 50-row smoke training; raw teacher/base/student evaluation with the provided scorer; independent release-model CI for v1/v2; archive and seven-file manifests checked locally and against S3; container image/limits/fault tests; real rollout/recovery/HPA/cold-start/load tests; 30 unit/API tests, lint and the provided NACL simulator. A deliberate untrained-model run really failed the 95% quality gate. Gitleaks history scanning found zero secrets.
 
-## Limitations I am aware of
-- A 70M student trained on ~1,500 noisy teacher labels makes mistakes; the scores in the report
-  reflect that honestly.
-- The AI occasionally produced plausible-but-wrong details (e.g. version pins, k8s field names);
-  I caught these by actually running the build, which is why the provided checkers matter.
+AI suggestions required corrections: malformed intent types could raise errors, whitespace stripping altered raw teacher output, normalisation could accept nonexact spans, decoded-text extraction could hide invalid output, and missing artifacts made old score claims unverifiable. These were corrected and the necessary data, training and cluster experiments were actually executed. CPU thread limits and graceful shutdown addressed runtime constraints. Report numbers come from saved output files, with mismatched Locust shutdown snapshots identified explicitly rather than silently edited.
 
-## Repository revision assistance
-
-OpenAI Codex assisted with the README rewrite, student details in the
-documentation and report sources, and formatting and comment cleanup.
-This revision preserves the existing program logic, model prompt, datasets,
-and recorded results. Verification performed for this revision is separate
-from the historical training and cluster runs described above.
-
-## Submission audit and repository setup
-
-Codex compared the supplied assignment PDF and starter ZIP with the project,
-recomputed scores from saved predictions, added the missing GitHub Actions workflow
-and ignore files, corrected unsupported claims in the report, and compiled the PDF.
-Historical measurements are identified as supplied evidence; missing training data,
-model archives, and live-cluster checks are not claimed as newly verified.
+Limits remain: teacher noise, small-model semantic errors, no hidden-test access, one-host serving, short benchmark windows and sampled resource metrics. The handwritten reflection must be written by the student in their own words and genuinely scanned; AI drafting guidance is not a substitute for that requirement.

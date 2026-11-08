@@ -21,171 +21,176 @@
 \fancyfoot[C]{\small\thepage}
 \setlength{\headheight}{14pt}
 \begin{document}
-\begin{center}{\LARGE\bfseries Cloud Computing Mini Project - Report}\end{center}
+\begin{center}{\LARGE\bfseries Cloud Computing Mini Project}\end{center}
 
-\textbf{Name:} Lokesh Yadav\\ \textbf{Roll number:} 230101039\\ \textbf{Repository:} \href{https://github.com/lokesh1-cell/cloud-assignmnet.git}{lokesh1-cell/cloud-assignmnet}
-
-
-\textbf{Evidence status (8 November 2026).} This report separates the supplied historical outputs in \texttt{results/\allowbreak{}} from checks rerun during the submission audit. The saved model scores were recomputed successfully, but model weights, raw teacher shards, the cleaned training dataset, and a link identifying the original cluster run were not available. Historical logs are evidence supplied with the project, not proof that this repository has reproduced those runs. The submission remains incomplete.
+\textbf{Name:} Lokesh Yadav\\ \textbf{Roll number:} 230101039\\ \textbf{Repository:} \href{https://github.com/lokesh1-cell/cloud-assignmnet.git}{lokesh1-cell/cloud-assignmnet}\\ \textbf{Course:} CS3081 | \textbf{Measured:} 8 November 2026
 
 
-\section{Architecture overview}
-
-The intended system uses a local k3d cluster with SeaweedFS in namespace \texttt{data}, teacher workers in \texttt{pipeline}, and the inference service in \texttt{app}. Ollama serves \texttt{phi3.5}; workers label commands, cleaning produces the student training set, and CPU training fine-tunes \texttt{EleutherAI/\allowbreak{}pythia-70m}. Model files belong in object storage and GitHub Release assets, outside Git and the service image. FastAPI loads the model at startup and exposes the parser through a Kubernetes Service and Ingress.
+A CPU-only command parser distils Phi-3.5 into Pythia-70M. The pipeline is command pool -\textgreater{} parallel teacher workers -\textgreater{} strict cleaner -\textgreater{} student training -\textgreater{} S3 model storage -\textgreater{} FastAPI -\textgreater{} Kubernetes Service/Ingress. All current numbers below come from this repository's new executions; supplied earlier logs are preserved separately in \texttt{results/\allowbreak{}historical/\allowbreak{}}. No validation labels were used for training. Raw model text is scored without JSON repair.
 
 
-\section{Task 1 - Object storage and parallel teacher labelling}
+\section{Task 1: Object storage and parallel labelling}
 
-\textbf{Design and implementation.} \texttt{cluster/\allowbreak{}k3d.yaml} declares one server and one agent. SeaweedFS has persistent storage and an S3 service; \texttt{scripts/\allowbreak{}init\_\allowbreak{}storage.py} creates \texttt{datasets} and \texttt{models} and uploads the provided command pool. The indexed Job has two completions and parallelism two. Workers use zero-based line-number modulo \texttt{SHARD\_\allowbreak{}COUNT} to select a shard; \texttt{JOB\_\allowbreak{}COMPLETION\_\allowbreak{}INDEX} supplies the shard index when \texttt{SHARD\_\allowbreak{}INDEX} is absent. The prompt requests the four required keys; the default teacher settings are temperature zero and seed 42.
+\texttt{cluster/\allowbreak{}k3d.yaml} creates k3d; SeaweedFS runs in \texttt{data} with buckets \texttt{datasets} and \texttt{models}. The command pool is uploaded before labelling. \texttt{prompts/\allowbreak{}teacher\_\allowbreak{}prompt.txt} requests exactly the four keys, the eight allowed intents, literal minimal slot spans and null for absent slots. Ollama 0.40.15 serves the required \texttt{phi3.5} teacher with temperature 0 and seed 42. Teacher replies are retained exactly, including whitespace.
 
 
-Cleaning rejects invalid JSON, wrong keys, unsupported intents, invented slot values, and duplicate command texts, keeping the smallest ID and sorting by ID. It writes the cleaned JSONL and SHA-256. The supplied counts are:
+Workers in \texttt{pipeline} select zero-based input lines using line\_number modulo SHARD\_COUNT = SHARD\_INDEX. To finish CPU labelling using free runners, two runner groups each ran two concurrent workers, globally SHARD\_COUNT=4 with indexes 0/1 and 2/3. Each wrote 750 rows to its own S3 shard. Existing genuine checkpoints were resumed; transient transport failures were retried without editing successful replies. The four shards were collected into shared object storage before cleaning. Actual coverage is 3000 rows, 3000 unique command IDs, zero gaps/repeats and zero empty replies. The evidence includes worker logs, shard coverage and object listings.
+
+
+\begin{center}\small\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}\toprule
+
+\textbf{Cleaning category (first applicable reason)} & \textbf{Records} \\ \midrule
+
+Input & 3000 \\
+
+(a) Invalid JSON & 0 \\
+
+(b) Incorrect keys & 1 \\
+
+(c) Unsupported or non-string intent & 4 \\
+
+(d) Non-null slot not an exact nonempty command span & 98 \\
+
+Duplicate commands, retain smallest ID & 49 \\
+
+Kept, sorted by ID & 2848 \\
+
+\bottomrule\end{tabularx}\end{center}
+
+3000 = 0 + 1 + 4 + 98 + 49 + 2848. Local re-cleaning reproduced the dataset byte for byte. SHA-256 is \texttt{5cda236a5762e5b0d56b0d502be90410e3b321205f5007b18c7154d453823f40}. Evidence: \texttt{results/\allowbreak{}fresh/\allowbreak{}local\_\allowbreak{}dataset\_\allowbreak{}verification.json}, training/data artifacts, and \href{https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42475264293}{teacher generation run}. The parent aggregate stage was intentionally cancelled after both label jobs and teacher evaluation succeeded, so corrected cleaning/training could consume those same artifacts. Static sharding can leave stragglers; a resumable queue would improve utilisation.
+
+
+\section{Task 2: Sequence-level student distillation}
+
+\texttt{make train} reads \texttt{training/\allowbreak{}config.yaml}: EleutherAI/pythia-70m, seed 42, learning rate 0.00005, batch size 8, three epochs, maximum sequence length 128, and only the first 1500 cleaned examples. Training strings are \texttt{Command: \textless{}text\textgreater{}} followed by \texttt{JSON: \textless{}teacher reply\textgreater{}}. CPU PyTorch 2.4.1 and Transformers 4.44.2 are pinned; the exact environment is in \texttt{training/\allowbreak{}requirements.lock.txt}. The 50-example smoke run completed before full training. Version v2 uses the same data/config and seed 7. The 100 labelled validation commands are used only for evaluation.
 
 
 \begin{center}\small\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}\toprule
 
-\textbf{Input} & \textbf{Invalid JSON} & \textbf{Wrong keys} & \textbf{Bad intent} & \textbf{Bad slot} & \textbf{Duplicates} & \textbf{Kept} \\ \midrule
+\textbf{Model (100 validation commands)} & \textbf{JSON valid} & \textbf{Intent} & \textbf{Date} & \textbf{Time} & \textbf{Place} & \textbf{Full frame} \\ \midrule
 
-3000 & 0 & 1 & 3 & 86 & 49 & 2861 \\
+Teacher phi3.5 & 100\% & 85\% & 80\% & 88\% & 86\% & 49\% \\
 
-\bottomrule\end{tabularx}\end{center}
+Untrained Pythia-70M & 0\% & 0\% & 0\% & 0\% & 0\% & 0\% \\
 
-\textbf{Verified:} the partition adds to 3000 and cleaning unit tests pass. The command pool matches the starter ZIP byte for byte. \textbf{Not verified:} execution of two workers in \texttt{pipeline}, exactly-once shard coverage, bucket contents, or the cleaned file checksum, because the shard and training artifacts are missing. The existing worker strips outer whitespace from the response string; exact raw-reply preservation requires review. Recover the original shards or regenerate them without manual editing. A queued worker design could reduce shard imbalance.
+Student v1, seed 42 & 100\% & 79\% & 76\% & 90\% & 82\% & 41\% \\
 
-
-\section{Task 2 - Student training and evaluation}
-
-\textbf{Design and configuration.} Training is sequence-level distillation: the target is the teacher's generated JSON, conditioned on \texttt{Command: \textless{}text\textgreater{}} followed by \texttt{JSON:}. Prompt tokens are masked in the loss. The configuration records seed 42, learning rate 0.00005, batch size 8, three epochs, maximum length 128, and a 1500-example limit. Version two uses seed 7. CPU execution lowers hardware requirements but limits throughput. \texttt{make train SUBSET=50} provides a smoke-run interface.
-
-
-\textbf{Recomputed results:} the provided scorer reproduces every saved score from the saved prediction files on the unchanged 100-example validation set:
-
-
-\begin{center}\small\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}\toprule
-
-\textbf{Model} & \textbf{JSON validity} & \textbf{Intent} & \textbf{Date} & \textbf{Time} & \textbf{Place} & \textbf{Full frame} \\ \midrule
-
-Teacher & 100\% & 85\% & 80\% & 88\% & 85\% & 48\% \\
-
-Untrained base & 0\% & 0\% & 0\% & 0\% & 0\% & 0\% \\
-
-Student v1 & 99\% & 82\% & 77\% & 85\% & 82\% & 43\% \\
-
-Student v2 & 97\% & 78\% & 71\% & 88\% & 85\% & 44\% \\
+Student v2, seed 7 & 99\% & 83\% & 76\% & 87\% & 82\% & 42\% \\
 
 \bottomrule\end{tabularx}\end{center}
 
-These checks establish internal consistency of the saved predictions and reports; they do not establish which unavailable weights generated the predictions. The v1 full-frame score is above half the teacher score on this validation set; hidden set performance is unknown. Supplied v1 epoch losses are 0.257248, 0.104621, and 0.072164. \texttt{training/\allowbreak{}loss.csv} matches the supplied v2 loss record, not v1.
+\texttt{results/\allowbreak{}pred\_\allowbreak{}*.jsonl} and score JSON files retain all 100 raw outputs per model, with no missing IDs. Re-running the provided scorer exactly reproduces these tables; release-based CI independently reproduced both student scores. V1 epoch losses are 0.241773, 0.095099, 0.076223; v2 losses are 0.247422, 0.096295, 0.074788. V1's 41\% full-frame result exceeds half of the teacher's 49\% on this validation set; hidden-test performance is unknown. The student learns JSON structure but still confuses intents and slots. V2 produces an invalid repeated intent on V091; it is retained and counted as an error.
 
 
-Sequence-level distillation learns hard text targets. Logit-based distillation instead learns from per-token probability distributions. This implementation's Ollama generation interface supplies text, not the distributions needed by the training procedure; the two model tokenizers also differ. The 70M student is small and CPU-friendly but makes slot and intent errors. Cleaner teacher labels and additional experiments within the required training cap could improve it.
+Both distinct models, tokenizers, version metadata, archive checksums and individual file manifests are published in \href{https://github.com/lokesh1-cell/cloud-assignmnet/releases/tag/model-v1}{release model-v1}. Each version's seven manifest entries and archive hash were verified locally and by streaming the S3 objects; lineage metadata records 1500 examples and the training-data checksum above. \texttt{models/\allowbreak{}v1/\allowbreak{}model.sha256} identifies the release archive. No weights are committed to Git or embedded in the image. Evidence: \href{https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42482536228}{successful training run}, \texttt{results/\allowbreak{}fresh/\allowbreak{}local\_\allowbreak{}model\_\allowbreak{}verification.json}, and \texttt{results/\allowbreak{}fresh/\allowbreak{}live/\allowbreak{}storage\_\allowbreak{}verification.json}.
 
 
-\textbf{Outstanding:} restore or retrain both model versions, verify a 50-example smoke run, store the models and tokenizers in object storage, publish release archives and checksums, and regenerate predictions from those exact weights. No trained model release was present in the target repository at the audit.
+Sequence-level distillation trains on the teacher's generated sequences as ordinary targets. Logit-based distillation instead matches soft token probability distributions, often using a temperature-scaled divergence. This project's saved Ollama generation responses contain text, not full teacher token distributions; Phi and Pythia also have different token vocabularies, so directly matching their logits is undefined without alignment and a different teacher interface. This implementation therefore cannot perform logit matching. A hard target discards uncertainty and transfers teacher mistakes. A 70M causal model is small enough for CPU deployment but has limited capacity and copying accuracy; better prompt design and error analysis could improve labels without substituting hand-written answers.
 
 
-\section{Task 3 - Inference service in a container}
+\section{Task 3: Container inference service}
 
-\textbf{Implementation.} FastAPI listens on port 8000. \texttt{/\allowbreak{}healthz} reports liveness; \texttt{/\allowbreak{}readyz} stays 503 until model loading completes. \texttt{/\allowbreak{}parse} returns the four-key object and model-version/pod headers, returns 503 while unready, and returns \texttt{\{"error":"invalid\_\allowbreak{}model\_\allowbreak{}output"\}} with HTTP 500 for schema-invalid output. \texttt{FAULT\_\allowbreak{}INJECT=1} exercises that error path. The loader uses \texttt{MODEL\_\allowbreak{}URI}, \texttt{MODEL\_\allowbreak{}VERSION}, \texttt{S3\_\allowbreak{}ENDPOINT}, and \texttt{MAX\_\allowbreak{}NEW\_\allowbreak{}TOKENS}; Kubernetes supplies storage credentials from Secrets. The Dockerfile installs CPU PyTorch and copies source and schema without model files. Declared runtime packages are version-pinned; transitive packages are not captured in a complete lock file.
-
-
-\textbf{Verified:} API unit tests pass using a stubbed model, including readiness, headers, valid output, invalid output, and fault injection. \textbf{Supplied evidence:} local inference/endpoints logs and an image-size record of 1.74 GB. These were not rerun with actual weights. A \texttt{kubectl top pods} snapshot records 452 MiB and 475 MiB, which is not a continuous peak-memory measurement.
+FastAPI listens on port 8000. \texttt{/\allowbreak{}healthz} returns 200 while alive; \texttt{/\allowbreak{}readyz} returns 503 until model loading completes, then 200. \texttt{/\allowbreak{}parse} validates the raw decoded model output against \texttt{data/\allowbreak{}schema.json}; success contains only intent/date/time/place, with \texttt{X-Model-Version} and Pod-name \texttt{X-Served-By} headers. Malformed output yields HTTP 500 and exactly \texttt{\{"error":"invalid\_\allowbreak{}model\_\allowbreak{}output"\}}. The live fault-injection request confirmed this body and status. Unready parse requests return 503.
 
 
-\textbf{Outstanding:} build and run the actual image, issue 50 sequential requests at 1 CPU and 1 GiB, record exit/OOM status and peak memory. The supplied 10-command local inference log and cluster snapshot do not meet that specific test. Improve performance through measured batching; verify unusual malformed output types too.
+MODEL\_URI, MODEL\_VERSION, S3\_ENDPOINT and MAX\_NEW\_TOKENS control loading/generation; FAULT\_INJECT tests validation. Credentials come from a Kubernetes Secret, not source files. The loader paginates S3 listings, rejects unsafe object paths, downloads the model/tokenizer on startup, and logs each download. CPU inference uses one Torch thread. Dockerfiles use an immutable Python base digest, CPU-only Torch, and fully frozen direct/transitive dependencies.
 
 
-\section{Task 4 - Deployment, scaling, and reliability}
+The fresh live build measured \textbf{1,267,334,183 bytes}, below 2 GB, with no model weights in \texttt{/\allowbreak{}app}. A separate container was limited to \textbf{1 CPU and 1 GiB}, with swap also capped at 1 GiB. All \textbf{50 sequential requests succeeded}, OOMKilled=false, exit code 0. The cgroup memory peak was \textbf{793,964,544 bytes (757.18 MiB)}; this is distinct from sampled Kubernetes working-set memory. Evidence: \texttt{results/\allowbreak{}fresh/\allowbreak{}live/\allowbreak{}limited\_\allowbreak{}container\_\allowbreak{}*}, image history/files/size, and fault result in \texttt{live\_\allowbreak{}summary.json}. A sampled metric can miss short peaks; cgroup peak accounting addresses that for this container test. Production hardening would add authentication and admission limits.
 
-The Deployment specifies two replicas, requests of 250m CPU/512 MiB, limits of 1 CPU/1 GiB, liveness/readiness probes, and a rolling-update strategy with zero unavailable replicas and one surge replica. Service and Ingress expose \texttt{/\allowbreak{}parse}. The HPA targets 70\% CPU with one to two replicas. Supplied evidence shows:
+
+\section{Task 4: Kubernetes scaling and reliability}
+
+The \texttt{app} namespace contains a Deployment, Service and Traefik Ingress. Two replicas request 250m CPU/512 MiB each and are limited to 1 CPU/1 GiB. Liveness uses \texttt{/\allowbreak{}healthz}, readiness uses \texttt{/\allowbreak{}readyz}; readiness endpoint observations show zero routable endpoints before the replacement models become ready. Rolling updates use maxUnavailable=0 and maxSurge=1; a five-second preStop drain and 45-second termination grace reduce in-flight failures. HPA minimum=1, maximum=2, target CPU=70\%, with a 30-second downscale stabilisation window.
 
 
 \begin{center}\small\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}\toprule
 
-\textbf{Check} & \textbf{Recorded evidence} & \textbf{Assessment} \\ \midrule
+\textbf{Actual experiment} & \textbf{Measurement} & \textbf{Required outcome} \\ \midrule
 
-Rollout & 2 failures / 39 requests = 5.13\% & Exceeds required 0.5\%; rollback header evidence absent \\
+Three replacement cohorts, creation to Ready & 9 s, 8 s, 9 s; median 9 s & Logs explicitly show S3 downloads \\
 
-Recovery & Two ready pods after one replacement & Recovery load-test error rate not recorded \\
+HPA load/idle cycle & 1 -\textgreater{} 2 -\textgreater{} 1; idle wait 41.77 s & Both scaling directions observed \\
 
-Cold start & 8 s, 8 s, 8 s; median 8 s & Timer origin and explicit S3 download evidence insufficient \\
+Roll v1 -\textgreater{} v2 -\textgreater{} undo under load & CSV: 548 requests, 1 failure = 0.1825\% & At most 0.5\%; restored header v1 \\
 
-Balancing & 109 and 104 successful responses & About 51.2\% and 48.8\%; both exceed 30\% \\
+Delete one Pod under load & CSV: 354 requests, 0 failures; restored in 7.42 s & At most 2\%; two Ready replicas restored \\
 
-HPA & 196\% utilization; scaling limited at two & Does not prove a 1-to-2-to-1 scaling cycle \\
+Two-replica load balancing & 180 and 176 successful final responses & Shares 50.56\% and 49.44\%, each above 30\% \\
 
 \bottomrule\end{tabularx}\end{center}
 
-A rollout configuration cannot establish that the required failure-rate target was met. The failed requests still count; their precise cause is not established. Startup logs show \texttt{model loaded} but do not identify an S3 download. Repeat these experiments with timestamped logs, explicit storage-download logging, headers after rollback, and simultaneous load/recovery counters. Confirm that no Service endpoint is ready while the model is loading. Both k3d nodes run on the same host, so the setup cannot demonstrate fault tolerance across physical machines.
+Direct requests after update and rollback returned model headers v2 and v1 respectively. The rollout's one real failure is included; Locust correctly exited 1 because any failure triggers that exit code. All thresholds above are calculated from actual evidence rather than the workflow conclusion alone. Logs, CSVs, endpoint/HPA snapshots and teardown output are in \texttt{results/\allowbreak{}fresh/\allowbreak{}live/\allowbreak{}}; \href{https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42493789838}{live run} completed successfully.
 
 
-\section{Task 5 - Subnets and stateless access control}
+The k3d serving cluster ran on one free runner VM (four logical CPUs, not multiple physical fault domains). Container/Pod replacement demonstrates local process recovery, not machine-level availability. Three cold starts are a small sample and exclude image pull/build time because timing starts at Pod creation. Multi-host deployment and longer perturbation tests would strengthen reliability evidence.
 
-Allocate the largest requirement first within \texttt{10.20.0.0/\allowbreak{}16}. A prefix must satisfy \texttt{2\textasciicircum{}(32-prefix)-2 \textgreater{}= hosts}; the resulting minimum blocks are contiguous:
+
+\section{Task 5: Subnetting and stateless access control}
+
+Largest-first contiguous VLSM uses usable hosts = 2\textasciicircum{}(32-prefix)-2. The next smaller sizes /23, /25, /26, /28 offer only 510, 126, 62, 14 hosts respectively, so the selected prefixes are minimal. Detailed working is in \texttt{network/\allowbreak{}subnets.md}.
 
 
 \begin{center}\small\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}\toprule
 
-\textbf{Subnet} & \textbf{Network/prefix} & \textbf{Usable range} & \textbf{Broadcast} & \textbf{Usable hosts} \\ \midrule
+\textbf{Subnet / required hosts} & \textbf{Network} & \textbf{Usable range} & \textbf{Broadcast} & \textbf{Usable hosts} \\ \midrule
 
-app & 10.20.0.0/22 & 10.20.0.1 - 10.20.3.254 & 10.20.3.255 & 1022 \\
+app / 1000 & 10.20.0.0/22 & 10.20.0.1-10.20.3.254 & 10.20.3.255 & 1022 \\
 
-public & 10.20.4.0/24 & 10.20.4.1 - 10.20.4.254 & 10.20.4.255 & 254 \\
+public / 250 & 10.20.4.0/24 & 10.20.4.1-10.20.4.254 & 10.20.4.255 & 254 \\
 
-data & 10.20.5.0/25 & 10.20.5.1 - 10.20.5.126 & 10.20.5.127 & 126 \\
+data / 100 & 10.20.5.0/25 & 10.20.5.1-10.20.5.126 & 10.20.5.127 & 126 \\
 
-management & 10.20.5.128/27 & 10.20.5.129 - 10.20.5.158 & 10.20.5.159 & 30 \\
+management / 20 & 10.20.5.128/27 & 10.20.5.129-10.20.5.158 & 10.20.5.159 & 30 \\
 
 \bottomrule\end{tabularx}\end{center}
 
-The public-subnet NACL blocks the abusive range before inbound allows, permits HTTP/HTTPS globally, SSH only from management, and TCP ephemeral replies from app. Outbound allows TCP 8000 to app and TCP ephemeral replies to clients. All other traffic is denied. NACLs are stateless, so replies need separate rules. First-match ordering means the abusive-range deny must have a lower rule number than web allows. \textbf{Verified:} all six sample packets and subnet tests pass. Hidden packet results remain unknown. These are conceptual network rules, not enforcement of these CIDRs by the local k3d cluster. Stateful per-service controls would be finer.
+\texttt{network/\allowbreak{}nacl.json} denies all inbound traffic from 198.51.100.0/24 at rule 100, before web-port allows. It allows inbound TCP 80/443 from anywhere, SSH only from management, and ephemeral reply ports 1024-65535 only from app. Outbound permits TCP 8000 to app and ephemeral client reply ports to anywhere; unmatched traffic is denied. A stateless NACL remembers no connection, so each reply direction needs an explicit rule. Lowest-number-first matching makes the abusive-range deny override the broader web allows. The provided simulator passes \textbf{6/6} sample packets. The 20 hidden packets are unavailable; these are simulated design rules, not a claim of enforcing VLSM inside k3d. Network-policy enforcement would be a separate improvement.
 
 
-\section{Task 6 - Reproducibility, tests, and CI/CD}
+\section{Task 6: Reproducibility, tests and CI/CD}
 
-The audit added the missing GitHub Actions workflow and credential/model ignore rules. CI runs lint, unit tests, release-model download with SHA-256 verification, model evaluation, and a 95\% JSON-validity gate. A separate job runs Gitleaks on Git history. A manual \texttt{untrained} option evaluates the actual base model to demonstrate a failing quality gate. Model files are expected as \texttt{v1.tar.gz} and \texttt{model.sha256} on release \texttt{model-v1}; the latter contains the archive checksum. A v2 archive must also be published for the reliability experiments.
-
-
-\textbf{Verified locally:} all 22 existing tests, lint, shell syntax, kit-file integrity, saved-score reproduction, and network checks. The application Python logic is unchanged by the formatting and documentation revision. Training and deployment were not rerun because the required artifacts and local Docker/k3d/Ollama tools were absent. \texttt{make up} and \texttt{make down} exist, but a fresh-clone deployment cannot be claimed successful without the model release and dependencies.
+From a fresh clone: copy \texttt{.env.example} to \texttt{.env}, set a local development secret, then \texttt{make up}. That script creates the cluster, builds/imports images, deploys SeaweedFS, downloads release artifacts with checksum verification, seeds buckets and deploys the service. \texttt{make down} removed the tested cluster; the recorded cluster list confirms teardown. Build, training, evaluation, testing, rollout and shutdown commands are in README and \texttt{docs/\allowbreak{}RUNBOOK.md}.
 
 
-\textbf{Verified CI:} the \href{https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42471592876}{deliberate bad-model run} ran the untrained base on all 100 validation examples and failed specifically at the quality gate: JSON validity 0\%, below 95\%. Lint, all 22 tests, model inference, and the secret scan passed in that run. Generated predictions and scores are saved under \texttt{results/\allowbreak{}submission\_\allowbreak{}audit/\allowbreak{}ci\_\allowbreak{}bad\_\allowbreak{}model/\allowbreak{}}. The \href{https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42471592070}{normal release run} is blocked by the absent trained-model release. This is distinct from the intentional quality-gate failure. \texttt{AI\_\allowbreak{}USE.md} records this audit's assistance.
+GitHub Actions runs lint, \textbf{30 unit/API regression tests}, actual release-model inference, then the supplied scorer with \texttt{--min-validity 95}; a separate Gitleaks job scans Git history. Tests include exact teacher whitespace, malformed intent types, exact slot spans, schema failures, readiness and response headers. Frozen training dependencies were captured from the successful run. \href{https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42493781600}{Release v1 CI} and \href{https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42493785783}{release v2 CI} both passed, including the 95\% gate and clean secret scan. The \href{https://github.com/lokesh1-cell/cloud-assignmnet/actions/runs/42475597603}{deliberately bad untrained-model run} failed at that gate with 0\% validity after lint/tests succeeded; a missing artifact is not used as a substitute demonstration.
 
 
-\section{Task 7 - Performance, cost, and review}
-
-The saved cluster run used four users for \textbf{90 seconds}, so it is not the required two-minute standard run. Its final console summary records 215 requests, two HTTP 500 failures, p50 1600 ms, p95 3300 ms, and 2.41 requests/s. The saved CSV records 213 requests, two failures, and 2.4024 requests/s, while successful-response headers total 213. The files therefore reflect different counting snapshots and should not be presented as one reconciled dataset. Repeat the standard command for 2m.
+\texttt{AI\_\allowbreak{}USE.md} records Codex assistance with auditing, fixes, orchestration and report writing, and how outputs were checked. Existing application logic was retained except for documented correctness/reproducibility fixes: unedited text, type-safe validation, bounded transport retry, secure model download paths, inference thread limits and graceful termination. Random seeds and locks improve reproducibility but cannot guarantee bitwise-identical training across CPU/library changes. Hidden tests and the student's personal handwritten reflection remain outside automated verification.
 
 
-For a clearly identified historical console snapshot, success is 213/215 = 99.07\% and error rate is 0.93\%. A 99\% success SLO over that 90-second run gives an error budget of 2.15 requests: two whole failures allowed, both used (93.02\% of the fractional budget). The CSV snapshot independently gives 211/213 = 99.06\% and an error budget of 2.13 requests. Neither snapshot is a fresh measured run.
+\section{Task 7: Performance, cost, SLO and review}
+
+The standard two-minute, four-user Locust run used the provided \texttt{tools/\allowbreak{}locustfile.py} through Ingress with exactly two Ready replicas. The CSV snapshot reports \textbf{353 requests, zero failures, p50 1200 ms, p95 2500 ms, throughput 2.942516 requests/s}. Thus error rate 0\% \textless{}=1\% and p95 \textless{}=5000 ms. Shutdown drained three in-flight requests: the final console/header snapshot instead reports \textbf{356 requests, zero failures, p50 1400 ms, p95 2500 ms} and replica totals 180+176. The original files are unchanged. CSV and final console are different snapshots; their denominators are not combined. Rollout/recovery CSV snapshots likewise precede their final header counts.
 
 
-\textbf{Indicative cost using the console's rounded throughput:} assume two replicas billed at limits of 1 vCPU and 1 GiB. Per replica per hour = 1 x 3.50 + 1 x 0.45 = 3.95 INR. Total = 7.90 INR/hour. Requests/hour = 2.41 x 3600 = 8676. Cost per 1000 requests = 7.90 / 8676 x 1000 = \textbf{0.9106 INR}. Using the CSV rate instead gives about 0.9134 INR. The rate card is hypothetical; these are estimates. The saved resource snapshot is 953m CPU/452 MiB and 906m CPU/475 MiB; cold-start median from the supplied timings is 8 s, subject to the Task 4 evidence limits.
+During the standard run, \texttt{kubectl top} samples for Pod suffix 5cglq ranged \textbf{369-1009m CPU, 335-442 MiB}; jvg2g ranged \textbf{581-779m CPU, 378-409 MiB}. These are sampled metrics, not continuous peaks; short CPU accounting intervals may slightly exceed the nominal 1000m reading. Cold-start median is 9 s. Resource ranges and calculations are reproducible from \texttt{results/\allowbreak{}performance\_\allowbreak{}analysis.json} and the underlying raw samples.
+
+
+\textbf{Estimated cost (hypothetical rate card):} each replica/hour = 1 vCPU x 3.50 + 1 GiB x 0.45 = 3.95 INR. Two replicas/hour = 7.90 INR. CSV requests/hour = 2.9425162385 x 3600 = 10593.05846. Cost per 1000 = 7.90 / 10593.05846 x 1000 = \textbf{0.74577 INR}. This bills service limits; it is not a real provider quote and excludes teacher training, storage, ingress and host overhead.
+
+
+\textbf{SLO:} at least 99\% success over one two-minute standard run. For the explicitly chosen CSV snapshot N=353, error budget = 0.01 x 353 = 3.53 requests, so at most three whole failures are allowed. Zero were used (0\% of budget). The final drained snapshot separately has N=356 and budget 3.56; it also has zero failures. Neither demonstrates a monthly availability SLO.
 
 
 \begin{center}\small\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}\toprule
 
-\textbf{Concern} & \textbf{Recorded or rerun evidence} & \textbf{Limitation} & \textbf{Improvement} \\ \midrule
+\textbf{Concern} & \textbf{Measured evidence} & \textbf{Limitation} & \textbf{Proposed improvement} \\ \midrule
 
-Data/storage & 2861 kept in supplied counts & Raw shards missing & Restore shards and verify checksum \\
+Data and storage & 3000 covered, 2848 kept & 103 rejected labels; static shards can stall & Improve prompt and use resumable queue \\
 
-Model quality & Recomputed v1 full frame 43\% & Weights unavailable & Publish exact versioned models \\
+Model quality & v1 full frame 41\%, teacher 49\% & Noisy hard labels; hidden quality unknown & Analyse intent/slot errors; tune only training data \\
 
-Latency/throughput & Saved p95 3300 ms; 2.41 rps & 90 s run and inconsistent totals & Rerun standard 2m test \\
+Latency / throughput & p95 2500 ms, 2.943 rps & Small CPU-only sequential decoder & Evaluate batching under same limits \\
 
-Resources & Snapshot 452/475 MiB & Not a measured memory peak & Sample during 50 sequential requests \\
+Resource utilisation & Container peak 757.18 MiB & Close to 1 GiB; top is sampled & Profile allocations and benchmark quantisation \\
 
-Reliability/recovery & Saved rollout 2/39 failures & Above 0.5\%; recovery error rate absent & Repeat under measured load \\
+Reliability / recovery & Recovery 7.42 s; 0\% failures & One host; only one deletion experiment & Test independent hosts and repeated failures \\
 
-Security/cost & NACL 6/6; estimated 0.9106 INR/1000 & Broad S3 identity and assumed billing & Scope credentials and rerun cost \\
+Security and cost & Secret findings 0; 0.74577 INR/1000 & Local secret, no API auth; partial cost model & Rotate secrets, add auth/TLS, include infrastructure costs \\
 
 \bottomrule\end{tabularx}\end{center}
 
-\section{Submission status and references}
-
-The report and source are prepared, but missing model/data artifacts and live-run evidence prevent a complete compliance claim. The student will supply the handwritten reflection as \texttt{230101039.pdf} (maximum three pages). Package the report, reflection, sources, results, and README into \texttt{230101039.zip}, and tag the complete submission commit \texttt{final} only after outstanding requirements are resolved.
-
-
-References: the supplied CS3081 assignment and starter kit; Bastianelli et al., SLURP (EMNLP 2020, CC BY 4.0); Kim and Rush, Sequence-Level Knowledge Distillation (EMNLP 2016); project configuration and evidence files referenced above.
+\textbf{Submission:} source, results and report are repository deliverables; weights/tokenizers/checksums are Release assets. The student supplies the genuine handwritten scan \texttt{230101039.pdf} (at most three pages). Package it with this report, README, final sources and datasets as \texttt{230101039.zip}. The technical commit is tagged \texttt{final}; hidden-test scores and handwritten authorship are not asserted by this report.
 
 \end{document}
