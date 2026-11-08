@@ -7,6 +7,8 @@ jobs:
   label:
     runs-on: ubuntu-latest
     timeout-minutes: 350
+    env:
+      SHARD_COUNT: "4"
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
@@ -18,9 +20,9 @@ jobs:
         run: bash scripts/ci/prepare_cluster.sh
       - name: Start fixed CPU teacher
         run: |
-          docker run -d --name teacher --network k3d-cloud-mini --cpus 3 --memory 8g \
-            -p 127.0.0.1:11434:11434 -e OLLAMA_NUM_PARALLEL=2 \
-            -e OLLAMA_CONTEXT_LENGTH=2048 -e OLLAMA_KEEP_ALIVE=-1 \
+          docker run -d --name teacher --network k3d-cloud-mini --cpus 4 --memory 8g \
+            -p 127.0.0.1:11434:11434 -e OLLAMA_NUM_PARALLEL=4 \
+            -e OLLAMA_CONTEXT_LENGTH=1024 -e OLLAMA_KEEP_ALIVE=-1 \
             ollama/ollama:0.40.15
           for attempt in $(seq 1 60); do
             if curl -sf http://localhost:11434/api/tags >/dev/null; then break; fi
@@ -41,7 +43,7 @@ jobs:
             complete=$(kubectl -n pipeline get job teacher-label -o jsonpath='{.status.succeeded}')
             failed=$(kubectl -n pipeline get job teacher-label -o jsonpath='{.status.conditions[?(@.type=="Failed")].status}')
             if [ "$failed" = True ]; then exit 1; fi
-            if [ "${complete:-0}" = 2 ]; then break; fi
+            if [ "${complete:-0}" = 4 ]; then break; fi
             sleep 45
           done
           kubectl -n pipeline wait --for=condition=complete job/teacher-label --timeout=30s

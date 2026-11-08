@@ -3,6 +3,7 @@
 import collections
 import hashlib
 import json
+import os
 from pathlib import Path
 import sys
 
@@ -10,9 +11,10 @@ sys.path.insert(0, "worker")
 import storage
 
 pool = [json.loads(line) for line in Path("data/commands_pool.jsonl").read_text().splitlines()]
-expected = {row["id"]: i % 2 for i, row in enumerate(pool)}
+shard_count = int(os.environ.get("SHARD_COUNT", "4"))
+expected = {row["id"]: i % shard_count for i, row in enumerate(pool)}
 actual = collections.Counter()
-for shard in range(2):
+for shard in range(shard_count):
     key = f"teacher/shard-{shard}.jsonl"
     text = storage.read_text("datasets", key)
     path = Path("datasets") / key
@@ -33,7 +35,7 @@ assert digest == Path("datasets/v1/train.sha256").read_text().split()[0]
 report = {
     "input_ids": len(pool),
     "unique_label_ids": len(actual),
-    "shards": 2,
+    "shards": shard_count,
     "exactly_once": True,
     "modulo_verified": True,
     "train_sha256": digest,
