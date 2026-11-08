@@ -1,12 +1,15 @@
 """Measure the real container and cluster; preserve results even when a target is missed."""
 
 import csv
+import atexit
+import base64
 import datetime as dt
 import json
 import os
 from pathlib import Path
 import statistics
 import subprocess
+import tempfile
 import threading
 import time
 import urllib.error
@@ -142,6 +145,16 @@ def finish_load(name, process, log):
 
 
 def container_checks():
+    secret = json.loads(
+        run("kubectl", "-n", "app", "get", "secret", "s3-credentials", "-o", "json")
+    )
+    with tempfile.NamedTemporaryFile("w", prefix="parser-credentials-", delete=False) as env_file:
+        credential_file = env_file.name
+        for key in ("AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"):
+            value = base64.b64decode(secret["data"][key]).decode()
+            env_file.write(f"{key}={value}\n")
+        env_file.write("AWS_REGION=us-east-1\n")
+    atexit.register(lambda: Path(credential_file).unlink(missing_ok=True))
     size = int(
         run("docker", "image", "inspect", "cloud-mini/service:v1", "--format", "{{.Size}}").strip()
     )
@@ -160,7 +173,7 @@ def container_checks():
         "--network",
         "host",
         "--env-file",
-        ".env",
+        credential_file,
         "-e",
         "MODEL_URI=s3://models/v1",
         "-e",
@@ -216,6 +229,7 @@ def container_checks():
     save("limited_container_memory.json", samples)
     SUMMARY["container"] = {
         "image_bytes": size,
+        "credential_source": "Kubernetes Secret app/s3-credentials",
         "image_under_2gb": size <= 2_000_000_000,
         "requests": len(replies),
         "successful": sum(r["status"] == 200 for r in replies),
@@ -242,7 +256,7 @@ def container_checks():
         "--network",
         "host",
         "--env-file",
-        ".env",
+        credential_file,
         "-e",
         "MODEL_URI=s3://models/v1",
         "-e",
