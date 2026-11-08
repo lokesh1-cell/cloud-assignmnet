@@ -9,6 +9,7 @@ Each output line is {"id": "...", "prediction": "<raw model text>"}; score.py pa
 
 import argparse
 import json
+import os
 
 
 def extract_json(generated):
@@ -40,6 +41,8 @@ def main():
     a = ap.parse_args()
 
     import torch
+
+    torch.set_num_threads(int(os.environ.get("TORCH_NUM_THREADS", "1")))
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
     tokenizer = AutoTokenizer.from_pretrained(a.model)
@@ -49,8 +52,6 @@ def main():
     model.eval()
 
     rows = [json.loads(line) for line in open(a.input, encoding="utf-8") if line.strip()]
-    import os
-
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     with open(a.out, "w", encoding="utf-8") as out:
         for r in rows:

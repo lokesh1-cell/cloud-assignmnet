@@ -209,6 +209,7 @@ def container_checks():
             "image": state["Image"],
             "cpu_limit_nano": state["HostConfig"]["NanoCpus"],
             "memory_limit_bytes": state["HostConfig"]["Memory"],
+            "memory_swap_limit_bytes": state["HostConfig"]["MemorySwap"],
         },
     )
     save("limited_container_requests.json", replies)
@@ -223,6 +224,7 @@ def container_checks():
         "memory_peak_bytes": int(peak) if peak.isdigit() else None,
         "cpu_limit_nano": state["HostConfig"]["NanoCpus"],
         "memory_limit_bytes": state["HostConfig"]["Memory"],
+        "memory_swap_limit_bytes": state["HostConfig"]["MemorySwap"],
     }
     run("docker", "rm", "limited-parser")
     run(
